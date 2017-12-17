@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,7 +16,7 @@ namespace TimeTracker
         List<Project> projects = new List<Project>();
       //  List<AspNetUsers> users = new List<AspNetUsers>();
         List<ProjectMembers> projectMembers = new List<ProjectMembers>();
-        LogInForm LoginForm = new LogInForm();
+        //LogInForm LoginForm = new LogInForm(false);
         public AspNetUsers currentUser { get; set; }
 
         public MainFormUI()
@@ -31,7 +31,7 @@ namespace TimeTracker
       //      users = UserRepository.GetAll();
             projectMembers = ProjectMemberRepository.GetAll();
 
-            currentUser = LoginForm.GetUser();
+            //currentUser = LoginForm.GetUser();
 
         }
 

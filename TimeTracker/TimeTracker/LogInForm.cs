@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,7 +22,7 @@ namespace TimeTracker
 
         public bool IsLoggedIn = false;
 
-        public LogInForm()
+        public LogInForm(Boolean autologin)
         {
             InitializeComponent();
 
@@ -31,7 +31,6 @@ namespace TimeTracker
 
             projects = ProjectRepository.GetAll();
             users = UserRepository.GetAll();
-            pwdTextbox.PasswordChar = '*';
         }
 
         private void logInButton_Click(object sender, EventArgs e)

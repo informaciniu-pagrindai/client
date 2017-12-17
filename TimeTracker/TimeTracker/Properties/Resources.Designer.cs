@@ -59,5 +59,36 @@ namespace TimeTracker.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #@(#) createTables.ddl
+        ///
+        ///CREATE TABLE UserProjects
+        ///(
+        ///	projectID varchar (20) NOT NULL,
+        ///	title varchar (20) NOT NULL,
+        ///	PRIMARY KEY(projectID)
+        ///);
+        ///
+        ///CREATE TABLE UserData
+        ///(
+        ///	userdataID varchar (20) NOT NULL,
+        ///	login varchar (20) NOT NULL,
+        ///	pass varchar (40),
+        ///	fk_activeProject varchar (20),
+        ///	PRIMARY KEY(userdataID),
+        ///	CONSTRAINT fkc_activeProject FOREIGN KEY(fk_activeProject) REFERENCES UserProjects (projectID)
+        ///);
+        ///
+        ///CREATE TABLE ActionTypes
+        ///(
+        ///	actionTypeID varchar (20) NOT NULL,
+        ///	fk_project var [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string createTables {
+            get {
+                return ResourceManager.GetString("createTables", resourceCulture);
+            }
+        }
     }
 }
