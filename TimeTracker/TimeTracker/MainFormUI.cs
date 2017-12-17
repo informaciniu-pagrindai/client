@@ -35,9 +35,9 @@ namespace TimeTracker
 
         }
 
-        private void MyProjectsBtn_Click(object sender, EventArgs e)
+        private void curProjNameLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-
+            // Open project select window
         }
     }
 }
