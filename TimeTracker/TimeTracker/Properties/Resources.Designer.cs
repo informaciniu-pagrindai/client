@@ -61,9 +61,17 @@ namespace TimeTracker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to #@(#) createTables.ddl
-        ///
-        ///CREATE TABLE UserProjects
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon clock1 {
+            get {
+                object obj = ResourceManager.GetObject("clock1", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CREATE TABLE UserProjects
         ///(
         ///	projectID varchar (20) NOT NULL,
         ///	title varchar (20) NOT NULL,
@@ -73,7 +81,7 @@ namespace TimeTracker.Properties {
         ///CREATE TABLE UserData
         ///(
         ///	userdataID varchar (20) NOT NULL,
-        ///	login varchar (20) NOT NULL,
+        ///	login varchar (20),
         ///	pass varchar (40),
         ///	fk_activeProject varchar (20),
         ///	PRIMARY KEY(userdataID),
@@ -83,7 +91,8 @@ namespace TimeTracker.Properties {
         ///CREATE TABLE ActionTypes
         ///(
         ///	actionTypeID varchar (20) NOT NULL,
-        ///	fk_project var [rest of string was truncated]&quot;;.
+        ///	fk_project varchar (20) NOT NULL,
+        ///	name varchar  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string createTables {
             get {

@@ -14,37 +14,64 @@ namespace TimeTracker
 {
     public partial class LogInForm : Form
     {
+        public bool IsLoggedIn;
+        public AspNetUsers LoggedInUser { get; set; }
+
         ApplicationDbContext context = new ApplicationDbContext();
         List<Project> projects = new List<Project>();
         List<AspNetUsers> users = new List<AspNetUsers>();
 
-        public AspNetUsers LoggedInUser { get; set; }
+        private TimeTracker timeTracker;
 
-        public bool IsLoggedIn = false;
-
-        public LogInForm(Boolean autologin)
+        public LogInForm(TimeTracker timeTracker)
         {
-            InitializeComponent();
+            this.timeTracker = timeTracker;
+            IsLoggedIn = false;
 
             ProjectsRepository ProjectRepository = new ProjectsRepository(context);
             AspNetUsersRepository UserRepository = new AspNetUsersRepository(context);
-
             projects = ProjectRepository.GetAll();
             users = UserRepository.GetAll();
+
+            InitializeComponent();
         }
 
         private void logInButton_Click(object sender, EventArgs e)
         {
-           MessageBox.Show(VerifyUser().ToString());
-        //    IsLoggedIn = true;
-            if (IsLoggedIn)
+            if (VerifyEmail(emailTextbox.Text))
             {
-                Hide();
-                MainFormUI form = new MainFormUI();
-                //  Application.Run(new MainFormUI());
-                //   form.Activate();
-                form.Show();
+                if (pwdTextbox.Text.Length > 0)
+                {
+                    logInButton.Text = "Logging in..";
+                    logInButton.Enabled = false;
+                    timeTracker.TryLogin(emailTextbox.Text, pwdTextbox.Text);
+                }
+                else
+                {
+                    MessageBox.Show("Password cannot be empty!");
+                }
             }
+            else
+            {
+                MessageBox.Show("Invalid e-mail!");
+            }
+        }
+
+        public void LoginFailCallback(string message)
+        {
+            // Restore state
+            logInButton.Text = "Log in";
+            logInButton.Enabled = true;
+            pwdTextbox.Text = "";
+
+            // Show reason
+            MessageBox.Show(message);
+        }
+
+        public static bool VerifyEmail(string email)
+        {
+            // TODO !!!
+            return true;
         }
 
         public static bool VerifyHashedPassword(string hashedPassword, string password)
