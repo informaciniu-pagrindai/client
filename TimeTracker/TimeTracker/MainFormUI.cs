@@ -47,6 +47,17 @@ namespace TimeTracker
         public void ActivateProject(Project project)
         {
             curProjNameLabel.Text = project.Title;
+            actionDGrid.Rows.Clear();
+            foreach (ProjectAction act in project.Actions)
+            {
+                int rowid = actionDGrid.Rows.Add();
+                actionDGrid.Rows[rowid].Tag = act;
+                actionDGrid.Rows[rowid].Cells[0].Value = act.Name;
+                if (act.Shortcut == null)
+                    actionDGrid.Rows[rowid].Cells[1].Value = "-None-";
+                else
+                    actionDGrid.Rows[rowid].Cells[1].Value = act.Shortcut;
+            }
         }
 
         private void logoutBtn_Click(object sender, EventArgs e)

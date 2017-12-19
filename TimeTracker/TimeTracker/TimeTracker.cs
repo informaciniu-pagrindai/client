@@ -16,7 +16,7 @@ namespace TimeTracker
         SQLiteConnection dbConn;
         private ServiceProvider service;
         private TimeController timctrl;
-        private ProjectController projctrl;
+        private ShortcutHandler schandl;
 
         private MainFormUI mainForm = null;
         private LogInForm loginForm = null;
@@ -56,6 +56,7 @@ namespace TimeTracker
 
             service = new ServiceProvider(this, dbConn);
             timctrl = new TimeController(this);
+            schandl = new ShortcutHandler(this);
 
             ShowLoginForm();
 
@@ -146,6 +147,15 @@ namespace TimeTracker
 
         public void ActivateProject(Project project)
         {
+            if (project == null)
+            {
+                schandl.ClearShortcuts();
+            }
+            else
+            {
+                service.UpdateProjectActions(project);
+                schandl.RegisterShortcuts(project);
+            }
             activeProject = project;
             if (mainForm != null)
             {

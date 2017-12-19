@@ -21,6 +21,7 @@ CREATE TABLE ActionTypes
 	actionTypeID varchar (20) NOT NULL,
 	fk_project varchar (20) NOT NULL,
 	name varchar (20) NOT NULL,
+	shortcut varchar (20),
 	PRIMARY KEY(actionTypeID),
 	CONSTRAINT fkc_project FOREIGN KEY(fk_project) REFERENCES UserProjects (projectID)
 );

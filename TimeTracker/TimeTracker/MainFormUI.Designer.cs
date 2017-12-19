@@ -34,7 +34,7 @@ namespace TimeTracker
             this.curProjNameLabel = new System.Windows.Forms.LinkLabel();
             this.shortcutGBox = new System.Windows.Forms.GroupBox();
             this.shortcutsEditBtn = new System.Windows.Forms.Button();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.actionDGrid = new System.Windows.Forms.DataGridView();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.stateGBox = new System.Windows.Forms.GroupBox();
             this.historyBtn = new System.Windows.Forms.Button();
@@ -44,7 +44,7 @@ namespace TimeTracker
             this.action = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.timeFrom = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.shortcutGBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.actionDGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.stateGBox.SuspendLayout();
             this.SuspendLayout();
@@ -90,7 +90,7 @@ namespace TimeTracker
             | System.Windows.Forms.AnchorStyles.Right)));
             this.shortcutGBox.AutoSize = true;
             this.shortcutGBox.Controls.Add(this.shortcutsEditBtn);
-            this.shortcutGBox.Controls.Add(this.dataGridView2);
+            this.shortcutGBox.Controls.Add(this.actionDGrid);
             this.shortcutGBox.Enabled = false;
             this.shortcutGBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.shortcutGBox.Location = new System.Drawing.Point(578, 13);
@@ -112,25 +112,26 @@ namespace TimeTracker
             this.shortcutsEditBtn.UseVisualStyleBackColor = true;
             this.shortcutsEditBtn.Click += new System.EventHandler(this.shortcutsEditBtn_Click);
             // 
-            // dataGridView2
+            // actionDGrid
             // 
-            this.dataGridView2.AllowUserToAddRows = false;
-            this.dataGridView2.AllowUserToDeleteRows = false;
-            this.dataGridView2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.actionDGrid.AllowUserToAddRows = false;
+            this.actionDGrid.AllowUserToDeleteRows = false;
+            this.actionDGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.dataGridView2.ColumnHeadersHeight = 40;
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.actionDGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.actionDGrid.ColumnHeadersHeight = 40;
+            this.actionDGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.actionDGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.actionNameColumn,
             this.actionShortcutColumn});
-            this.dataGridView2.Location = new System.Drawing.Point(10, 29);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.ReadOnly = true;
-            this.dataGridView2.RowTemplate.Height = 28;
-            this.dataGridView2.Size = new System.Drawing.Size(375, 414);
-            this.dataGridView2.TabIndex = 0;
+            this.actionDGrid.Location = new System.Drawing.Point(10, 29);
+            this.actionDGrid.Name = "actionDGrid";
+            this.actionDGrid.ReadOnly = true;
+            this.actionDGrid.RowHeadersVisible = false;
+            this.actionDGrid.RowTemplate.Height = 28;
+            this.actionDGrid.Size = new System.Drawing.Size(375, 414);
+            this.actionDGrid.TabIndex = 0;
             // 
             // dataGridView1
             // 
@@ -145,8 +146,9 @@ namespace TimeTracker
             this.dataGridView1.Location = new System.Drawing.Point(10, 29);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 28;
-            this.dataGridView1.Size = new System.Drawing.Size(369, 82);
+            this.dataGridView1.Size = new System.Drawing.Size(369, 100);
             this.dataGridView1.TabIndex = 8;
             // 
             // stateGBox
@@ -155,10 +157,10 @@ namespace TimeTracker
             this.stateGBox.Controls.Add(this.dataGridView1);
             this.stateGBox.Enabled = false;
             this.stateGBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.stateGBox.Location = new System.Drawing.Point(31, 335);
+            this.stateGBox.Location = new System.Drawing.Point(34, 317);
             this.stateGBox.Name = "stateGBox";
             this.stateGBox.Padding = new System.Windows.Forms.Padding(10);
-            this.stateGBox.Size = new System.Drawing.Size(518, 121);
+            this.stateGBox.Size = new System.Drawing.Size(518, 139);
             this.stateGBox.TabIndex = 9;
             this.stateGBox.TabStop = false;
             this.stateGBox.Text = "Būsena";
@@ -168,7 +170,7 @@ namespace TimeTracker
             this.historyBtn.Dock = System.Windows.Forms.DockStyle.Right;
             this.historyBtn.Location = new System.Drawing.Point(385, 29);
             this.historyBtn.Name = "historyBtn";
-            this.historyBtn.Size = new System.Drawing.Size(123, 82);
+            this.historyBtn.Size = new System.Drawing.Size(123, 100);
             this.historyBtn.TabIndex = 9;
             this.historyBtn.Text = "Istorija";
             this.historyBtn.UseVisualStyleBackColor = true;
@@ -240,7 +242,7 @@ namespace TimeTracker
             this.Padding = new System.Windows.Forms.Padding(10);
             this.Text = "Laiko sekimo sistema";
             this.shortcutGBox.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.actionDGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.stateGBox.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -254,7 +256,7 @@ namespace TimeTracker
         private System.Windows.Forms.LinkLabel curProjNameLabel;
         private System.Windows.Forms.GroupBox shortcutGBox;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.DataGridView actionDGrid;
         private System.Windows.Forms.GroupBox stateGBox;
         private System.Windows.Forms.Button historyBtn;
         private System.Windows.Forms.Button shortcutsEditBtn;

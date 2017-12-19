@@ -123,6 +123,7 @@
     <Compile Include="ProjectsRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceProvider.cs" />
+    <Compile Include="ShortcutHandler.cs" />
     <Compile Include="TimeController.cs" />
     <Compile Include="TimeTracker.cs" />
     <EmbeddedResource Include="HistoryForm.resx">

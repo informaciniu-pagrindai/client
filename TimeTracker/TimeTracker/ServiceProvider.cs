@@ -115,6 +115,23 @@ namespace TimeTracker
             return projs;
         }
 
+        public void UpdateProjectActions(Project project)
+        {
+            string sql = "SELECT * FROM ActionTypes WHERE fk_project='" + project.Id + "';";
+            using (SQLiteCommand command = new SQLiteCommand(sql, dbConn))
+            using (SQLiteDataReader dreader = command.ExecuteReader())
+            {
+                while (dreader.Read())
+                {
+                    string id = dreader.GetString(dreader.GetOrdinal("actionTypeID"));
+                    string name = dreader.GetString(dreader.GetOrdinal("name"));
+                    string shortcut = ReadNullableString(dreader, "shortcut");
+                    ProjectAction act = new ProjectAction(id, name, shortcut);
+                    project.Actions.Add(act);
+                }
+            }
+        }
+
         private string ReadNullableString(SQLiteDataReader reader, string columnName)
         {
             int col = reader.GetOrdinal(columnName);
