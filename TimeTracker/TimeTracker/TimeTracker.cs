@@ -25,8 +25,10 @@ namespace TimeTracker
         Icon icon;
         NotifyIcon notifyIcon;
         System.ComponentModel.Container components;
-        
+
+        // User state vars
         private bool loginResult = false;
+        private Project activeProject = null;
 
         public TimeTracker(string dataPath)
         {
@@ -106,7 +108,34 @@ namespace TimeTracker
             // HACK: bypass login
             loginResult = true;
             loginForm.Close();
+
+            // TODO Fetch user project list
+            
+            ShowMainForm();
         }
+        public void LogOut()
+        {
+            loginResult = false;
+            activeProject = null;
+            if (mainForm != null)
+            {
+                mainForm.Close();
+            }
+            ShowLoginForm();
+        }
+
+
+        public List<Project> GetUserProjects()
+        {
+            // TODO
+            return new List<Project>();
+        }
+        public List<Action> GetActionHistory()
+        {
+            // TODO
+            return new List<Action>();
+        }
+
 
         private void ShowLoginForm()
         {
@@ -121,21 +150,16 @@ namespace TimeTracker
         void loginForm_Closed(object sender, EventArgs e)
         {
             loginForm = null;
-            if (loginResult) // Logged in successfully
-            {
-                ShowMainForm();
-            }
-            else // Closed / exited
+            if (!loginResult) // Closed / exited
             {
                 ExitThread();
             }
         }
-
         private void ShowMainForm()
         {
             if (mainForm == null)
             {
-                mainForm = new MainFormUI();
+                mainForm = new MainFormUI(this);
                 mainForm.Closed += mainForm_Closed;
                 mainForm.Show();
             }
@@ -144,6 +168,8 @@ namespace TimeTracker
         void mainForm_Closed(object sender, EventArgs e) { mainForm = null; }
 
 
+
+        // Application tray
         private void ContextMenuStrip_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
             e.Cancel = false;
@@ -160,7 +186,6 @@ namespace TimeTracker
             e.Cancel = false;
             notifyIcon.ContextMenuStrip.Items.Clear();
         }
-
         private void showMainMenu_Click(object sender, EventArgs e)
         {
             ShowMainForm();
@@ -169,6 +194,7 @@ namespace TimeTracker
         {
             ExitThread();
         }
+
 
         protected override void Dispose(bool disposing)
         {

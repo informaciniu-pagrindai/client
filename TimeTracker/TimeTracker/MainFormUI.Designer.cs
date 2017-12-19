@@ -28,101 +28,129 @@ namespace TimeTracker
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFormUI));
             this.curProjLabel = new System.Windows.Forms.Label();
             this.curStateLabel = new System.Windows.Forms.Label();
-            this.curStateNameLabel = new System.Windows.Forms.Label();
             this.curProjNameLabel = new System.Windows.Forms.LinkLabel();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.action = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.timeFrom = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.timeTo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.edit = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.shortcutGBox = new System.Windows.Forms.GroupBox();
+            this.shortcutsEditBtn = new System.Windows.Forms.Button();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.actionNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.actionShortcutColumn = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.groupBox1.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.action = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.timeFrom = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stateGBox = new System.Windows.Forms.GroupBox();
+            this.historyBtn = new System.Windows.Forms.Button();
+            this.logoutBtn = new System.Windows.Forms.Button();
+            this.shortcutGBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.stateGBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // curProjLabel
             // 
             this.curProjLabel.AutoSize = true;
-            this.curProjLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 28F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.curProjLabel.Location = new System.Drawing.Point(56, 61);
+            this.curProjLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.curProjLabel.Location = new System.Drawing.Point(60, 197);
             this.curProjLabel.Name = "curProjLabel";
-            this.curProjLabel.Size = new System.Drawing.Size(293, 64);
+            this.curProjLabel.Size = new System.Drawing.Size(142, 32);
             this.curProjLabel.TabIndex = 1;
-            this.curProjLabel.Text = "Projektas: ";
+            this.curProjLabel.Text = "Projektas:";
             // 
             // curStateLabel
             // 
             this.curStateLabel.AutoSize = true;
-            this.curStateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 28F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.curStateLabel.Location = new System.Drawing.Point(56, 162);
+            this.curStateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.curStateLabel.Location = new System.Drawing.Point(60, 60);
             this.curStateLabel.Name = "curStateLabel";
-            this.curStateLabel.Size = new System.Drawing.Size(248, 64);
+            this.curStateLabel.Size = new System.Drawing.Size(183, 32);
             this.curStateLabel.TabIndex = 2;
-            this.curStateLabel.Text = "Būsena: ";
-            // 
-            // curStateNameLabel
-            // 
-            this.curStateNameLabel.AutoSize = true;
-            this.curStateNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 28F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.curStateNameLabel.Location = new System.Drawing.Point(341, 162);
-            this.curStateNameLabel.Name = "curStateNameLabel";
-            this.curStateNameLabel.Size = new System.Drawing.Size(47, 64);
-            this.curStateNameLabel.TabIndex = 4;
-            this.curStateNameLabel.Text = "-";
+            this.curStateLabel.Text = "Neprisijungta";
             // 
             // curProjNameLabel
             // 
             this.curProjNameLabel.AutoSize = true;
-            this.curProjNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 28F);
+            this.curProjNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
             this.curProjNameLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.curProjNameLabel.LinkColor = System.Drawing.SystemColors.ControlText;
-            this.curProjNameLabel.Location = new System.Drawing.Point(341, 61);
+            this.curProjNameLabel.Location = new System.Drawing.Point(222, 197);
             this.curProjNameLabel.Name = "curProjNameLabel";
-            this.curProjNameLabel.Size = new System.Drawing.Size(289, 64);
+            this.curProjNameLabel.Size = new System.Drawing.Size(147, 32);
             this.curProjNameLabel.TabIndex = 5;
             this.curProjNameLabel.TabStop = true;
             this.curProjNameLabel.Text = "-pasirinkti-";
             this.curProjNameLabel.VisitedLinkColor = System.Drawing.SystemColors.ControlText;
             this.curProjNameLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.curProjNameLabel_LinkClicked);
             // 
-            // groupBox1
+            // shortcutGBox
             // 
-            this.groupBox1.Controls.Add(this.dataGridView2);
-            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
-            this.groupBox1.Location = new System.Drawing.Point(755, 71);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(10);
-            this.groupBox1.Size = new System.Drawing.Size(336, 544);
-            this.groupBox1.TabIndex = 6;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Veiksmai";
-            this.groupBox1.Visible = false;
+            this.shortcutGBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.shortcutGBox.AutoSize = true;
+            this.shortcutGBox.Controls.Add(this.shortcutsEditBtn);
+            this.shortcutGBox.Controls.Add(this.dataGridView2);
+            this.shortcutGBox.Enabled = false;
+            this.shortcutGBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.shortcutGBox.Location = new System.Drawing.Point(578, 13);
+            this.shortcutGBox.Name = "shortcutGBox";
+            this.shortcutGBox.Padding = new System.Windows.Forms.Padding(10);
+            this.shortcutGBox.Size = new System.Drawing.Size(395, 507);
+            this.shortcutGBox.TabIndex = 6;
+            this.shortcutGBox.TabStop = false;
+            this.shortcutGBox.Text = "Veiksmai";
             // 
-            // statusStrip1
+            // shortcutsEditBtn
             // 
-            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 665);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1148, 30);
-            this.statusStrip1.TabIndex = 7;
-            this.statusStrip1.Text = "statusStrip1";
+            this.shortcutsEditBtn.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.shortcutsEditBtn.Location = new System.Drawing.Point(10, 449);
+            this.shortcutsEditBtn.Name = "shortcutsEditBtn";
+            this.shortcutsEditBtn.Size = new System.Drawing.Size(375, 48);
+            this.shortcutsEditBtn.TabIndex = 1;
+            this.shortcutsEditBtn.Text = "Redaguoti";
+            this.shortcutsEditBtn.UseVisualStyleBackColor = true;
+            this.shortcutsEditBtn.Click += new System.EventHandler(this.shortcutsEditBtn_Click);
             // 
-            // toolStripStatusLabel1
+            // dataGridView2
             // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(179, 25);
-            this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
+            this.dataGridView2.AllowUserToAddRows = false;
+            this.dataGridView2.AllowUserToDeleteRows = false;
+            this.dataGridView2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridView2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dataGridView2.ColumnHeadersHeight = 40;
+            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.actionNameColumn,
+            this.actionShortcutColumn});
+            this.dataGridView2.Location = new System.Drawing.Point(10, 29);
+            this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.ReadOnly = true;
+            this.dataGridView2.RowTemplate.Height = 28;
+            this.dataGridView2.Size = new System.Drawing.Size(375, 414);
+            this.dataGridView2.TabIndex = 0;
+            // 
+            // actionNameColumn
+            // 
+            this.actionNameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.actionNameColumn.FillWeight = 40F;
+            this.actionNameColumn.HeaderText = "Pavadinimas";
+            this.actionNameColumn.Name = "actionNameColumn";
+            this.actionNameColumn.ReadOnly = true;
+            this.actionNameColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.actionNameColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.actionNameColumn.Width = 104;
+            // 
+            // actionShortcutColumn
+            // 
+            this.actionShortcutColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.actionShortcutColumn.FillWeight = 60F;
+            this.actionShortcutColumn.HeaderText = "Kombinacija";
+            this.actionShortcutColumn.Name = "actionShortcutColumn";
+            this.actionShortcutColumn.ReadOnly = true;
+            this.actionShortcutColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
             // dataGridView1
             // 
@@ -132,14 +160,13 @@ namespace TimeTracker
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.action,
-            this.timeFrom,
-            this.timeTo,
-            this.edit});
-            this.dataGridView1.Location = new System.Drawing.Point(67, 300);
+            this.timeFrom});
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.dataGridView1.Location = new System.Drawing.Point(10, 29);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowTemplate.Height = 28;
-            this.dataGridView1.Size = new System.Drawing.Size(615, 315);
+            this.dataGridView1.Size = new System.Drawing.Size(369, 82);
             this.dataGridView1.TabIndex = 8;
             // 
             // action
@@ -154,87 +181,69 @@ namespace TimeTracker
             // timeFrom
             // 
             this.timeFrom.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.timeFrom.HeaderText = "Nuo";
+            this.timeFrom.HeaderText = "Pradėta";
             this.timeFrom.Name = "timeFrom";
             this.timeFrom.ReadOnly = true;
             this.timeFrom.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.timeFrom.Width = 74;
+            this.timeFrom.Width = 101;
             // 
-            // timeTo
+            // stateGBox
             // 
-            this.timeTo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.timeTo.HeaderText = "Iki";
-            this.timeTo.Name = "timeTo";
-            this.timeTo.ReadOnly = true;
-            this.timeTo.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.timeTo.Width = 61;
+            this.stateGBox.Controls.Add(this.historyBtn);
+            this.stateGBox.Controls.Add(this.dataGridView1);
+            this.stateGBox.Enabled = false;
+            this.stateGBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.stateGBox.Location = new System.Drawing.Point(31, 335);
+            this.stateGBox.Name = "stateGBox";
+            this.stateGBox.Padding = new System.Windows.Forms.Padding(10);
+            this.stateGBox.Size = new System.Drawing.Size(518, 121);
+            this.stateGBox.TabIndex = 9;
+            this.stateGBox.TabStop = false;
+            this.stateGBox.Text = "Būsena";
             // 
-            // edit
+            // historyBtn
             // 
-            this.edit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.edit.HeaderText = "Keisti";
-            this.edit.Name = "edit";
-            this.edit.Width = 53;
+            this.historyBtn.Dock = System.Windows.Forms.DockStyle.Right;
+            this.historyBtn.Location = new System.Drawing.Point(385, 29);
+            this.historyBtn.Name = "historyBtn";
+            this.historyBtn.Size = new System.Drawing.Size(123, 82);
+            this.historyBtn.TabIndex = 9;
+            this.historyBtn.Text = "Istorija";
+            this.historyBtn.UseVisualStyleBackColor = true;
+            this.historyBtn.Click += new System.EventHandler(this.historyBtn_Click);
             // 
-            // dataGridView2
+            // logoutBtn
             // 
-            this.dataGridView2.AllowUserToAddRows = false;
-            this.dataGridView2.AllowUserToDeleteRows = false;
-            this.dataGridView2.ColumnHeadersHeight = 40;
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.actionNameColumn,
-            this.actionShortcutColumn});
-            this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView2.Location = new System.Drawing.Point(10, 47);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.ReadOnly = true;
-            this.dataGridView2.RowTemplate.Height = 28;
-            this.dataGridView2.Size = new System.Drawing.Size(316, 487);
-            this.dataGridView2.TabIndex = 0;
-            // 
-            // actionNameColumn
-            // 
-            this.actionNameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.actionNameColumn.FillWeight = 40F;
-            this.actionNameColumn.HeaderText = "Pavadinimas";
-            this.actionNameColumn.Name = "actionNameColumn";
-            this.actionNameColumn.ReadOnly = true;
-            this.actionNameColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.actionNameColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.actionNameColumn.Width = 206;
-            // 
-            // actionShortcutColumn
-            // 
-            this.actionShortcutColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.actionShortcutColumn.FillWeight = 60F;
-            this.actionShortcutColumn.HeaderText = "Kombinacija";
-            this.actionShortcutColumn.Name = "actionShortcutColumn";
-            this.actionShortcutColumn.ReadOnly = true;
-            this.actionShortcutColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.actionShortcutColumn.Width = 198;
+            this.logoutBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.logoutBtn.Location = new System.Drawing.Point(60, 117);
+            this.logoutBtn.Name = "logoutBtn";
+            this.logoutBtn.Size = new System.Drawing.Size(131, 41);
+            this.logoutBtn.TabIndex = 10;
+            this.logoutBtn.Text = "Atsijungti";
+            this.logoutBtn.UseVisualStyleBackColor = true;
+            this.logoutBtn.Click += new System.EventHandler(this.logoutBtn_Click);
             // 
             // MainFormUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1148, 695);
-            this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.groupBox1);
+            this.ClientSize = new System.Drawing.Size(986, 533);
+            this.Controls.Add(this.logoutBtn);
+            this.Controls.Add(this.stateGBox);
+            this.Controls.Add(this.shortcutGBox);
             this.Controls.Add(this.curProjNameLabel);
-            this.Controls.Add(this.curStateNameLabel);
             this.Controls.Add(this.curStateLabel);
             this.Controls.Add(this.curProjLabel);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "MainFormUI";
-            this.Text = "MainFormUI";
-            this.groupBox1.ResumeLayout(false);
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.Padding = new System.Windows.Forms.Padding(10);
+            this.Text = "Laiko sekimo sistema";
+            this.shortcutGBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.stateGBox.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -243,18 +252,17 @@ namespace TimeTracker
         #endregion
         private System.Windows.Forms.Label curProjLabel;
         private System.Windows.Forms.Label curStateLabel;
-        private System.Windows.Forms.Label curStateNameLabel;
         private System.Windows.Forms.LinkLabel curProjNameLabel;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.GroupBox shortcutGBox;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn action;
-        private System.Windows.Forms.DataGridViewTextBoxColumn timeFrom;
-        private System.Windows.Forms.DataGridViewTextBoxColumn timeTo;
-        private System.Windows.Forms.DataGridViewButtonColumn edit;
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.DataGridViewTextBoxColumn actionNameColumn;
         private System.Windows.Forms.DataGridViewButtonColumn actionShortcutColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn action;
+        private System.Windows.Forms.DataGridViewTextBoxColumn timeFrom;
+        private System.Windows.Forms.GroupBox stateGBox;
+        private System.Windows.Forms.Button historyBtn;
+        private System.Windows.Forms.Button shortcutsEditBtn;
+        private System.Windows.Forms.Button logoutBtn;
     }
 }

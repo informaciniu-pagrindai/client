@@ -28,10 +28,10 @@ namespace TimeTracker
             this.timeTracker = timeTracker;
             IsLoggedIn = false;
 
-            ProjectsRepository ProjectRepository = new ProjectsRepository(context);
-            AspNetUsersRepository UserRepository = new AspNetUsersRepository(context);
-            projects = ProjectRepository.GetAll();
-            users = UserRepository.GetAll();
+            //ProjectsRepository ProjectRepository = new ProjectsRepository(context);
+            //AspNetUsersRepository UserRepository = new AspNetUsersRepository(context);
+            //projects = ProjectRepository.GetAll();
+            //users = UserRepository.GetAll();
 
             InitializeComponent();
         }
@@ -127,15 +127,14 @@ namespace TimeTracker
             IsLoggedIn = true;   // VerifyHashedPassword(user.PasswordHash, pwdTextbox.Text);
             return IsLoggedIn;
         }
-
-        private void LogInForm_Load(object sender, EventArgs e)
-        {
-           
-        }
-
         public AspNetUsers GetUser()
         {
             return LoggedInUser;
+        }
+
+        private void registerBtn_Click(object sender, EventArgs e)
+        {
+            // TODO Open browser to website register page
         }
     }
 }
