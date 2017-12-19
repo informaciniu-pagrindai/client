@@ -42,8 +42,7 @@ namespace TimeTracker
             {
                 if (pwdTextbox.Text.Length > 0)
                 {
-                    logInButton.Text = "Logging in..";
-                    logInButton.Enabled = false;
+                    showLoggingstate(true);
                     timeTracker.TryLogin(emailTextbox.Text, pwdTextbox.Text);
                 }
                 else
@@ -57,11 +56,24 @@ namespace TimeTracker
             }
         }
 
+        public void showLoggingstate(bool logging)
+        {
+            if (logging)
+            {
+                logInButton.Text = "Logging in..";
+                logInButton.Enabled = false;
+            }
+            else
+            {
+                logInButton.Text = "Log in";
+                logInButton.Enabled = true;
+            }
+        }
+
         public void LoginFailCallback(string message)
         {
             // Restore state
-            logInButton.Text = "Log in";
-            logInButton.Enabled = true;
+            showLoggingstate(false);
             pwdTextbox.Text = "";
 
             // Show reason

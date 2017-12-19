@@ -2,6 +2,7 @@ CREATE TABLE UserProjects
 (
 	projectID varchar (20) NOT NULL,
 	title varchar (20) NOT NULL,
+	roleName varchar (20),
 	PRIMARY KEY(projectID)
 );
 
@@ -40,9 +41,7 @@ CREATE TABLE Shortcuts
 (
 	shortcutID varchar (20) NOT NULL,
 	fk_actionType varchar (20) NOT NULL,
-	isLocal boolean NOT NULL,
-	startTime integer NOT NULL,
-	endTime integer,
+	keys varchar (20),
 	modified boolean NOT NULL,
 	PRIMARY KEY(shortcutID),
 	CONSTRAINT fkc_shortcut_actionType FOREIGN KEY(fk_actionType) REFERENCES ActionTypes (actionTypeID)

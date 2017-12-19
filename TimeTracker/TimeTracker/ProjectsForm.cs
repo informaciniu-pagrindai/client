@@ -18,18 +18,46 @@ namespace TimeTracker
             this.projects = projects;
 
             InitializeComponent();
-            // TODO fill grid
+            foreach (Project proj in projects)
+            {
+                int rowid = projectsGrid.Rows.Add();
+                projectsGrid.Rows[rowid].Tag = proj;
+                projectsGrid.Rows[rowid].Cells[0].Value = proj.Title;
+                projectsGrid.Rows[rowid].Cells[1].Value = proj.RoleName;
+                StringBuilder sb = new StringBuilder();
+                foreach (ProjectAction act in proj.Actions)
+                {
+                    sb.Append(act.Name);
+                    sb.Append("; ");
+                }
+                projectsGrid.Rows[rowid].Cells[2].Value = sb.ToString();
+            }
         }
 
         private void selectBtn_Click(object sender, EventArgs e)
         {
-            //Project selectedProject = projectsGrid. TODO
-            //timeTracker.ActivateProject(selectedProject);
-            Close();
+            if (projectsGrid.SelectedRows.Count >= 1)
+            {
+                Project selectedProject = (Project)projectsGrid.SelectedRows[0].Tag;
+                timeTracker.ActivateProject(selectedProject);
+                Close();
+            }
+            else
+            {
+                MessageBox.Show("Project not selected!", "Caption",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void cancelBtn_Click(object sender, EventArgs e)
         {
+            Close();
+        }
+
+        private void projectsGrid_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            Project selectedProject = (Project)projectsGrid.Rows[e.RowIndex].Tag;
+            timeTracker.ActivateProject(selectedProject);
             Close();
         }
     }

@@ -44,6 +44,11 @@ namespace TimeTracker
             shortcutGBox.Enabled = true;
         }
 
+        public void ActivateProject(Project project)
+        {
+            curProjNameLabel.Text = project.Title;
+        }
+
         private void logoutBtn_Click(object sender, EventArgs e)
         {
             timeTracker.LogOut();
@@ -65,7 +70,7 @@ namespace TimeTracker
         private void historyBtn_Click(object sender, EventArgs e)
         {
             // Open action history window
-            List<Action> actions = timeTracker.GetActionHistory();
+            List<ProjectAction> actions = timeTracker.GetActionHistory();
             if (historyForm == null)
             {
                 historyForm = new HistoryForm(timeTracker, actions);

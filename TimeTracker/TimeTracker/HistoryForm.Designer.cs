@@ -67,21 +67,19 @@
             // 
             // timeFrom
             // 
-            this.timeFrom.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.timeFrom.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.timeFrom.HeaderText = "Nuo";
             this.timeFrom.Name = "timeFrom";
             this.timeFrom.ReadOnly = true;
             this.timeFrom.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.timeFrom.Width = 74;
             // 
             // timeTo
             // 
-            this.timeTo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.timeTo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.timeTo.HeaderText = "Iki";
             this.timeTo.Name = "timeTo";
             this.timeTo.ReadOnly = true;
             this.timeTo.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.timeTo.Width = 61;
             // 
             // edit
             // 

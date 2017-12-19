@@ -18,8 +18,8 @@ namespace TimeTracker
         private TimeController timctrl;
         private ProjectController projctrl;
 
-        private MainFormUI mainForm;
-        private LogInForm loginForm;
+        private MainFormUI mainForm = null;
+        private LogInForm loginForm = null;
 
         Assembly _assembly;
         Icon icon;
@@ -54,8 +54,18 @@ namespace TimeTracker
 
             InitializeContext();
 
-            ServiceProvider service = new ServiceProvider(dbConn);
+            service = new ServiceProvider(this, dbConn);
+            timctrl = new TimeController(this);
+
             ShowLoginForm();
+
+            // Auto-login if saved data is available
+            service.ReadLoginDataFromDB();
+            if (service.LoginDataValid())
+            {
+                loginForm.showLoggingstate(true);
+                service.TryLogin(loginSuccessCallback, loginFailCallback);
+            }
         }
 
         private void InitializeContext()
@@ -102,12 +112,9 @@ namespace TimeTracker
         public void TryLogin(string email, string password)
         {
             // Begin async login
-            // TODO !!!
-            //loginForm.LoginFailCallback("Invalid e-mail or password");
-
-            // HACK: bypass login
-            loginResult = true;
-            loginForm.Close();
+            service.userlogin = email;
+            service.userpass = password;
+            service.TryLogin(loginSuccessCallback, loginFailCallback);
 
             // TODO Fetch user project list
             
@@ -124,16 +131,36 @@ namespace TimeTracker
             ShowLoginForm();
         }
 
+        public void loginSuccessCallback()
+        {
+            loginResult = true;
+            loginForm.Close();
+
+            ShowMainForm();
+            service.UpdateUserProjects(); // send request
+        }
+        public void loginFailCallback(string reason)
+        {
+            loginForm.showLoggingstate(false);
+        }
+
+        public void ActivateProject(Project project)
+        {
+            activeProject = project;
+            if (mainForm != null)
+            {
+                mainForm.ActivateProject(project);
+            }
+        }
 
         public List<Project> GetUserProjects()
         {
-            // TODO
-            return new List<Project>();
+            return service.GetUserProjects();
         }
-        public List<Action> GetActionHistory()
+        public List<ProjectAction> GetActionHistory()
         {
             // TODO
-            return new List<Action>();
+            return new List<ProjectAction>();
         }
 
 

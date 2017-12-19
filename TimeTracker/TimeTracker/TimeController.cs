@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +8,11 @@ namespace TimeTracker
 {
     class TimeController
     {
+        private TimeTracker timeTracker;
+
+        public TimeController(TimeTracker parent)
+        {
+            timeTracker = parent;
+        }
     }
 }

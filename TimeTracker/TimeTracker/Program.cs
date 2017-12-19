@@ -21,8 +21,9 @@ namespace TimeTracker
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            ApplicationContext applicationContext = new TimeTracker(datapath);
-            Application.Run(applicationContext);
+
+            TimeTracker timetracker = new TimeTracker(datapath);
+            Application.Run(timetracker);
         }
     }
 }

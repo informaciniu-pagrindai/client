@@ -11,9 +11,9 @@ namespace TimeTracker
     public partial class HistoryForm : Form
     {
         private TimeTracker timeTracker;
-        private List<Action> history;
+        private List<ProjectAction> history;
 
-        public HistoryForm(TimeTracker timetracker, List<Action> history)
+        public HistoryForm(TimeTracker timetracker, List<ProjectAction> history)
         {
             timeTracker = timetracker;
             this.history = history;

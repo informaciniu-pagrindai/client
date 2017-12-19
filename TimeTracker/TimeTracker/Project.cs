@@ -9,13 +9,15 @@ namespace TimeTracker
     {
         public string Id { get; set; }
         public string Title { get; set; }
-        public List<string> shortcuts { get; set; }
+        public string RoleName { get; set; }
+        public List<ProjectAction> Actions { get; set; }
 
-        public Project(string id, string title)
+        public Project(string id, string title, string roleName)
         {
             Id = id;
             Title = title;
-            shortcuts = new List<string>();
+            RoleName = roleName;
+            Actions = new List<ProjectAction>();
         }
     }
 }

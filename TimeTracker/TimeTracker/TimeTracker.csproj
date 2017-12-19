@@ -110,6 +110,7 @@
     <Compile Include="PasswordHash.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Project.cs" />
+    <Compile Include="ProjectAction.cs" />
     <Compile Include="ProjectController.cs" />
     <Compile Include="ProjectMembers.cs" />
     <Compile Include="ProjectMembersRepository.cs" />
