@@ -56,7 +56,7 @@ namespace TimeTracker
 
             service = new ServiceProvider(this, dbConn);
             timctrl = new TimeController(this);
-            schandl = new ShortcutHandler(this);
+            schandl = new ShortcutHandler(this); // TODO dispose propoerly
 
             ShowLoginForm();
 
@@ -173,6 +173,10 @@ namespace TimeTracker
             return new List<ProjectAction>();
         }
 
+        public void HandleActionEvent(string actionID)
+        {
+            Console.WriteLine("Ation event: " + actionID);
+        }
 
         private void ShowLoginForm()
         {
