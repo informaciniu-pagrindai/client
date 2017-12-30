@@ -5,9 +5,9 @@ namespace TimeTracker
     public partial class ShortcutEditFrom : Form
     {
         private TimeTracker timeTracker;
-        private ProjectAction action;
+        private ProjectActionType action;
 
-        public ShortcutEditFrom(TimeTracker parent, ProjectAction targetAction)
+        public ShortcutEditFrom(TimeTracker parent, ProjectActionType targetAction)
         {
             timeTracker = parent;
             action = targetAction;

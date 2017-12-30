@@ -25,7 +25,7 @@ namespace TimeTracker
                 projectsGrid.Rows[rowid].Cells[0].Value = proj.Title;
                 projectsGrid.Rows[rowid].Cells[1].Value = proj.RoleName;
                 StringBuilder sb = new StringBuilder();
-                foreach (ProjectAction act in proj.Actions)
+                foreach (ProjectActionType act in proj.ActionTypes)
                 {
                     sb.Append(act.Name);
                     sb.Append("; ");

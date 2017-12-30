@@ -23,6 +23,9 @@ namespace TimeTracker
         private Action loginSuccessCallback;
         private Action<string> loginFailCallback;
 
+        // For local action indexing
+        private int localActIndex = 0;
+
         public ServiceProvider(TimeTracker parent, SQLiteConnection dbConnection)
         {
             timeTracker = parent;
@@ -108,31 +111,32 @@ namespace TimeTracker
                     string id = dreader.GetString(dreader.GetOrdinal("projectID"));
                     string title = dreader.GetString(dreader.GetOrdinal("title"));
                     string rolename = ReadNullableString(dreader, "roleName");
-                    Project proj = new Project(id, title, rolename);
+                    var proj = new Project(id, title, rolename);
+                    UpdateActionTypes(proj);
                     projs.Add(proj);
                 }
             }
             return projs;
         }
 
-        public void UpdateProjectActions(Project project)
+        public void UpdateActionTypes(Project project)
         {
             string sql = "SELECT * FROM ActionTypes WHERE fk_project='" + project.Id + "';";
             using (SQLiteCommand command = new SQLiteCommand(sql, dbConn))
             using (SQLiteDataReader dreader = command.ExecuteReader())
             {
-                project.Actions.Clear();
+                project.ActionTypes.Clear();
                 while (dreader.Read())
                 {
                     string id = dreader.GetString(dreader.GetOrdinal("actionTypeID"));
                     string name = dreader.GetString(dreader.GetOrdinal("name"));
                     string shortcut = ReadNullableString(dreader, "shortcut");
-                    ProjectAction act = new ProjectAction(id, name, shortcut);
-                    project.Actions.Add(act);
+                    var act = new ProjectActionType(id, name, shortcut);
+                    project.ActionTypes.Add(act);
                 }
             }
         }
-        public void SetActionShortcut(ProjectAction action, string newShortcut)
+        public void SetActionShortcut(ProjectActionType action, string newShortcut)
         {
             string sql = "UPDATE ActionTypes SET shortcut='" + newShortcut
                 + "' WHERE actionTypeID='" + action.Id + "';";
@@ -142,6 +146,50 @@ namespace TimeTracker
             }
         }
 
+        public List<ProjectAction> GetActionHistory(Project targetProject)
+        {
+            List<ProjectAction> acts = new List<ProjectAction>();
+            foreach (var acttype in targetProject.ActionTypes)
+            {
+                string sql = "SELECT * FROM Actions WHERE fk_actionType='" + acttype.Id + "';";
+                using (SQLiteCommand command = new SQLiteCommand(sql, dbConn))
+                using (SQLiteDataReader dreader = command.ExecuteReader())
+                {
+                    while (dreader.Read())
+                    {
+                        string id = dreader.GetString(dreader.GetOrdinal("actionID"));
+                        bool islocal = dreader.GetBoolean(dreader.GetOrdinal("isLocal"));
+                        DateTime starttime = ToDateTime(dreader.GetInt32(dreader.GetOrdinal("startTime")));
+                        DateTime endtime;
+                        int etcol = dreader.GetOrdinal("endTime");
+                        if (dreader.IsDBNull(etcol))
+                            endtime = DateTime.MinValue;
+                        else
+                            endtime = ToDateTime(dreader.GetInt32(etcol));
+                        bool ismodified = dreader.GetBoolean(dreader.GetOrdinal("modified"));
+
+                        var act = new ProjectAction(id, acttype, DateTime.MinValue, DateTime.MaxValue);
+                        acts.Add(act);
+                    }
+                }
+            }
+            return acts;
+        }
+        public ProjectAction AddAction(ProjectActionType type, DateTime startTime)
+        {
+            string actid = "_act" + localActIndex;
+            var act = new ProjectAction(actid, type, startTime, DateTime.MinValue);
+            int starttime = 0; // TODO convert start time to target format
+
+            string sql = "INSERT INTO Actions ('actionID','fk_actionType','isLocal','startTime','endTime','modified') VALUES ('"
+                + actid + "','" + type.Id + "','true','" + starttime + "',NULL,'true');";
+            using (SQLiteCommand command = new SQLiteCommand(sql, dbConn))
+            {
+                command.ExecuteNonQuery();
+            }
+            return act;
+        }
+
         private string ReadNullableString(SQLiteDataReader reader, string columnName)
         {
             int col = reader.GetOrdinal(columnName);
@@ -149,6 +197,21 @@ namespace TimeTracker
                 return null;
             else
                 return reader.GetString(col);
+        }
+
+         /// <summary>
+         /// Converts a given DateTime into a Unix timestamp
+         /// </summary>
+         /// <param name="value">Any DateTime</param>
+         /// <returns>The given DateTime in Unix timestamp format</returns>
+        public static int ToUnixTimestamp(DateTime value)
+        {
+            return (int)Math.Truncate((value.ToUniversalTime().Subtract(new DateTime(1970, 1, 1))).TotalSeconds);
+        }
+
+        public static DateTime ToDateTime(int unixTime) // TODO
+        {
+            return new DateTime(1970, 1, 1);
         }
     }
 }

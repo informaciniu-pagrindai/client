@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace TimeTracker
@@ -80,23 +78,23 @@ namespace TimeTracker
             Console.WriteLine("HOTKEY: "+e.Modifiers.ToString() + " + " + e.Key.ToString());
 
             int index = _hotkeys.IndexOf(e);
-            string actionid = null;
+            ProjectActionType acttype = null;
             if (index >= 0)
-                actionid = _hotkeys[index].ActionID;
-            timeTracker.HandleActionEvent(actionid);
+                acttype = _hotkeys[index].ActionType;
+            timeTracker.HandleActionEvent(acttype);
         }
 
         public void RegisterShortcuts(Project project)
         {
             ClearShortcuts();
             activeProject = project;
-            foreach (ProjectAction act in project.Actions)
+            foreach (ProjectActionType act in project.ActionTypes)
             {
                 if (act.Shortcut != null)
                 {
                     // Register hotkey
                     string[] keys = act.Shortcut.Split();
-                    if (!RegisterHotKey(ModifierKeys.Control, Keys.F1, act.Id)) // TESTHACK, use parsed values
+                    if (!RegisterHotKey(ModifierKeys.Control, Keys.F1, act)) // TESTHACK, use parsed values
                         Console.WriteLine("Could not register hotkey: " + act.Shortcut);
                 }
             }
@@ -112,12 +110,12 @@ namespace TimeTracker
             _currentId = 0;
         }
 
-        private bool RegisterHotKey(ModifierKeys modifiers, Keys key, string actionID)
+        private bool RegisterHotKey(ModifierKeys modifiers, Keys key, ProjectActionType actionType)
         {
             if (!RegisterHotKey(_window.Handle, _currentId+1, (uint)modifiers, (uint)key))
                 return false;
             _currentId = _currentId + 1;
-            _hotkeys.Add(new KeyPressedEventArgs(modifiers, key) { ActionID = actionID });
+            _hotkeys.Add(new KeyPressedEventArgs(modifiers, key) { ActionType = actionType });
             return true;
         }
         
@@ -137,7 +135,7 @@ namespace TimeTracker
     {
         public ModifierKeys Modifiers;
         public Keys Key;
-        public string ActionID = null;
+        public ProjectActionType ActionType = null;
         public int id = -1;
 
         internal KeyPressedEventArgs(ModifierKeys modifiers, Keys key)

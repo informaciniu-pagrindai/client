@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace TimeTracker
@@ -153,7 +150,7 @@ namespace TimeTracker
             }
             else
             {
-                service.UpdateProjectActions(project);
+                service.UpdateActionTypes(project);
                 schandl.RegisterShortcuts(project);
             }
             activeProject = project;
@@ -163,10 +160,10 @@ namespace TimeTracker
             }
         }
 
-        public void SetActionShortcut(ProjectAction action, string newShortcut)
+        public void SetActionShortcut(ProjectActionType action, string newShortcut)
         {
             service.SetActionShortcut(action, newShortcut);
-            service.UpdateProjectActions(activeProject); // Assume action is for active project
+            service.UpdateActionTypes(activeProject); // Assume action is for active project
             schandl.RegisterShortcuts(activeProject);
             mainForm.UpdateProjectShortcuts();
         }
@@ -177,13 +174,12 @@ namespace TimeTracker
         }
         public List<ProjectAction> GetActionHistory()
         {
-            // TODO
-            return new List<ProjectAction>();
+            return service.GetActionHistory(activeProject);
         }
 
-        public void HandleActionEvent(string actionID)
+        public void HandleActionEvent(ProjectActionType action)
         {
-            Console.WriteLine("Ation event: " + actionID);
+            Console.WriteLine("Ation event: " + action.Id);
         }
 
         private void ShowLoginForm()

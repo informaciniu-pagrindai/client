@@ -55,7 +55,7 @@ namespace TimeTracker
         {
             // Fill quick action list
             actionDGrid.Rows.Clear();
-            foreach (ProjectAction act in activeProject.Actions)
+            foreach (ProjectActionType act in activeProject.ActionTypes)
             {
                 int rowid = actionDGrid.Rows.Add();
                 actionDGrid.Rows[rowid].Tag = act;
@@ -103,7 +103,7 @@ namespace TimeTracker
             // Open shortcut edit dialog
             if (actionDGrid.SelectedRows.Count > 0)
             {
-                ProjectAction action = (ProjectAction)actionDGrid.SelectedRows[0].Tag;
+                ProjectActionType action = (ProjectActionType)actionDGrid.SelectedRows[0].Tag;
                 using (var sform = new ShortcutEditFrom(timeTracker, action))
                 {
                     sform.ShowDialog(this);
@@ -131,8 +131,8 @@ namespace TimeTracker
             if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
                 e.RowIndex >= 0)
             {
-                ProjectAction act = (ProjectAction)senderGrid.Rows[e.RowIndex].Tag;
-                timeTracker.HandleActionEvent(act.Id);
+                ProjectActionType act = (ProjectActionType)senderGrid.Rows[e.RowIndex].Tag;
+                timeTracker.HandleActionEvent(act);
             }
         }
     }

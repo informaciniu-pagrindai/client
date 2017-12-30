@@ -1,21 +1,25 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TimeTracker
 {
     public class ProjectAction
     {
         public string Id { get; set; }
-        public string Name { get; set; }
-        public string Shortcut { get; set; }
+        public ProjectActionType Type { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
+        public bool IsLocal { get; set; }
+        public bool IsModified { get; set; }
 
-        public ProjectAction(string id, string name, string shortcut)
+        public ProjectAction(string id, ProjectActionType type, DateTime startTime, DateTime endTime,
+            bool isLocal = true, bool isModified = true)
         {
             Id = id;
-            Name = name;
-            Shortcut = shortcut;
+            Type = type;
+            StartTime = startTime;
+            EndTime = endTime;
+            IsLocal = isLocal;
+            IsModified = isModified;
         }
     }
 }
