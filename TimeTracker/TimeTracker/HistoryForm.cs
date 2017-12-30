@@ -16,7 +16,15 @@ namespace TimeTracker
             this.history = history;
 
             InitializeComponent();
-            // TODO fill grid
+            foreach (var act in history)
+            {
+                int rowid = historyGrid.Rows.Add();
+                historyGrid.Rows[rowid].Tag = act;
+                historyGrid.Rows[rowid].Cells[0].Value = act.Type.Name;
+                historyGrid.Rows[rowid].Cells[1].Value = act.StartTime;
+                if (act.EndTime != DateTime.MinValue)
+                    historyGrid.Rows[rowid].Cells[2].Value = act.EndTime;
+            }
         }
     }
 }

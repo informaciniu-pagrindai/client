@@ -168,7 +168,7 @@ namespace TimeTracker
                             endtime = ToDateTime(dreader.GetInt32(etcol));
                         bool ismodified = dreader.GetBoolean(dreader.GetOrdinal("modified"));
 
-                        var act = new ProjectAction(id, acttype, DateTime.MinValue, DateTime.MaxValue);
+                        var act = new ProjectAction(id, acttype, starttime, endtime);
                         acts.Add(act);
                     }
                 }
@@ -199,19 +199,24 @@ namespace TimeTracker
                 return reader.GetString(col);
         }
 
-         /// <summary>
-         /// Converts a given DateTime into a Unix timestamp
-         /// </summary>
-         /// <param name="value">Any DateTime</param>
-         /// <returns>The given DateTime in Unix timestamp format</returns>
-        public static int ToUnixTimestamp(DateTime value)
+        /// <summary>
+        /// Converts a given DateTime into a Unix timestamp
+        /// </summary>
+        /// <param name="dtime">Any DateTime</param>
+        /// <returns>The given DateTime in Unix timestamp format</returns>
+        public static int ToUnixTimestamp(DateTime dtime)
         {
-            return (int)Math.Truncate((value.ToUniversalTime().Subtract(new DateTime(1970, 1, 1))).TotalSeconds);
+            return (int)Math.Truncate((dtime.ToUniversalTime().Subtract(new DateTime(1970, 1, 1))).TotalSeconds);
         }
 
-        public static DateTime ToDateTime(int unixTime) // TODO
+        /// <summary>
+        /// Converts a given Unix timestamp into DateTime
+        /// </summary>
+        /// <param name="unixTime">Unix timestamp</param>
+        /// <returns>The given Unix timestamp in DateTime format</returns>
+        public static DateTime ToDateTime(int unixTime)
         {
-            return new DateTime(1970, 1, 1);
+            return new DateTime(1970, 1, 1).AddSeconds(unixTime);
         }
     }
 }
