@@ -121,6 +121,7 @@ namespace TimeTracker
             using (SQLiteCommand command = new SQLiteCommand(sql, dbConn))
             using (SQLiteDataReader dreader = command.ExecuteReader())
             {
+                project.Actions.Clear();
                 while (dreader.Read())
                 {
                     string id = dreader.GetString(dreader.GetOrdinal("actionTypeID"));
@@ -129,6 +130,15 @@ namespace TimeTracker
                     ProjectAction act = new ProjectAction(id, name, shortcut);
                     project.Actions.Add(act);
                 }
+            }
+        }
+        public void SetActionShortcut(ProjectAction action, string newShortcut)
+        {
+            string sql = "UPDATE ActionTypes SET shortcut='" + newShortcut
+                + "' WHERE actionTypeID='" + action.Id + "';";
+            using (SQLiteCommand command = new SQLiteCommand(sql, dbConn))
+            {
+                command.ExecuteNonQuery();
             }
         }
 

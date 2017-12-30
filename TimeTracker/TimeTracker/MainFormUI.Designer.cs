@@ -35,14 +35,14 @@ namespace TimeTracker
             this.shortcutGBox = new System.Windows.Forms.GroupBox();
             this.shortcutsEditBtn = new System.Windows.Forms.Button();
             this.actionDGrid = new System.Windows.Forms.DataGridView();
+            this.actionNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.actionShortcutColumn = new System.Windows.Forms.DataGridViewButtonColumn();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.action = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.timeFrom = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.stateGBox = new System.Windows.Forms.GroupBox();
             this.historyBtn = new System.Windows.Forms.Button();
             this.logoutBtn = new System.Windows.Forms.Button();
-            this.actionNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.actionShortcutColumn = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.action = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.timeFrom = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.shortcutGBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.actionDGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -130,8 +130,30 @@ namespace TimeTracker
             this.actionDGrid.ReadOnly = true;
             this.actionDGrid.RowHeadersVisible = false;
             this.actionDGrid.RowTemplate.Height = 28;
+            this.actionDGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.actionDGrid.Size = new System.Drawing.Size(375, 414);
             this.actionDGrid.TabIndex = 0;
+            this.actionDGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.actionDGrid_CellContentClick);
+            // 
+            // actionNameColumn
+            // 
+            this.actionNameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.actionNameColumn.FillWeight = 40F;
+            this.actionNameColumn.HeaderText = "Pavadinimas";
+            this.actionNameColumn.Name = "actionNameColumn";
+            this.actionNameColumn.ReadOnly = true;
+            this.actionNameColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.actionNameColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.actionNameColumn.Width = 104;
+            // 
+            // actionShortcutColumn
+            // 
+            this.actionShortcutColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.actionShortcutColumn.FillWeight = 60F;
+            this.actionShortcutColumn.HeaderText = "Kombinacija";
+            this.actionShortcutColumn.Name = "actionShortcutColumn";
+            this.actionShortcutColumn.ReadOnly = true;
+            this.actionShortcutColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
             // dataGridView1
             // 
@@ -150,6 +172,23 @@ namespace TimeTracker
             this.dataGridView1.RowTemplate.Height = 28;
             this.dataGridView1.Size = new System.Drawing.Size(369, 100);
             this.dataGridView1.TabIndex = 8;
+            // 
+            // action
+            // 
+            this.action.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.action.HeaderText = "Veiksmas";
+            this.action.Name = "action";
+            this.action.ReadOnly = true;
+            this.action.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.action.Width = 114;
+            // 
+            // timeFrom
+            // 
+            this.timeFrom.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.timeFrom.HeaderText = "Pradėta";
+            this.timeFrom.Name = "timeFrom";
+            this.timeFrom.ReadOnly = true;
+            this.timeFrom.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
             // stateGBox
             // 
@@ -186,43 +225,6 @@ namespace TimeTracker
             this.logoutBtn.Text = "Atsijungti";
             this.logoutBtn.UseVisualStyleBackColor = true;
             this.logoutBtn.Click += new System.EventHandler(this.logoutBtn_Click);
-            // 
-            // actionNameColumn
-            // 
-            this.actionNameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.actionNameColumn.FillWeight = 40F;
-            this.actionNameColumn.HeaderText = "Pavadinimas";
-            this.actionNameColumn.Name = "actionNameColumn";
-            this.actionNameColumn.ReadOnly = true;
-            this.actionNameColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.actionNameColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.actionNameColumn.Width = 104;
-            // 
-            // actionShortcutColumn
-            // 
-            this.actionShortcutColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.actionShortcutColumn.FillWeight = 60F;
-            this.actionShortcutColumn.HeaderText = "Kombinacija";
-            this.actionShortcutColumn.Name = "actionShortcutColumn";
-            this.actionShortcutColumn.ReadOnly = true;
-            this.actionShortcutColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // action
-            // 
-            this.action.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.action.HeaderText = "Veiksmas";
-            this.action.Name = "action";
-            this.action.ReadOnly = true;
-            this.action.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.action.Width = 114;
-            // 
-            // timeFrom
-            // 
-            this.timeFrom.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.timeFrom.HeaderText = "Pradėta";
-            this.timeFrom.Name = "timeFrom";
-            this.timeFrom.ReadOnly = true;
-            this.timeFrom.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
             // MainFormUI
             // 

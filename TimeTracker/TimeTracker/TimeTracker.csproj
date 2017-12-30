@@ -123,6 +123,12 @@
     <Compile Include="ProjectsRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceProvider.cs" />
+    <Compile Include="ShortcutEditFrom.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ShortcutEditFrom.Designer.cs">
+      <DependentUpon>ShortcutEditFrom.cs</DependentUpon>
+    </Compile>
     <Compile Include="ShortcutHandler.cs" />
     <Compile Include="TimeController.cs" />
     <Compile Include="TimeTracker.cs" />
@@ -149,6 +155,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="ShortcutEditFrom.resx">
+      <DependentUpon>ShortcutEditFrom.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

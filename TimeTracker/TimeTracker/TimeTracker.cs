@@ -163,6 +163,14 @@ namespace TimeTracker
             }
         }
 
+        public void SetActionShortcut(ProjectAction action, string newShortcut)
+        {
+            service.SetActionShortcut(action, newShortcut);
+            service.UpdateProjectActions(activeProject); // Assume action is for active project
+            schandl.RegisterShortcuts(activeProject);
+            mainForm.UpdateProjectShortcuts();
+        }
+
         public List<Project> GetUserProjects()
         {
             return service.GetUserProjects();

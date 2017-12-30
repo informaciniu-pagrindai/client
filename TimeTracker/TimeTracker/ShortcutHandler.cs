@@ -88,6 +88,7 @@ namespace TimeTracker
 
         public void RegisterShortcuts(Project project)
         {
+            ClearShortcuts();
             activeProject = project;
             foreach (ProjectAction act in project.Actions)
             {
