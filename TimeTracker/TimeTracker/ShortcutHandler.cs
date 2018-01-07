@@ -90,11 +90,19 @@ namespace TimeTracker
             activeProject = project;
             foreach (ProjectActionType act in project.ActionTypes)
             {
-                if (act.Shortcut != null)
+                if (act.Shortcut != Keys.None)
                 {
                     // Register hotkey
-                    string[] keys = act.Shortcut.Split();
-                    if (!RegisterHotKey(ModifierKeys.Control, Keys.F1, act)) // TESTHACK, use parsed values
+                    ModifierKeys modif = ModifierKeys.None;
+                    if ((act.Shortcut & Keys.Shift) != 0)
+                        modif |= ModifierKeys.Shift;
+                    if ((act.Shortcut & Keys.Control) != 0)
+                        modif |= ModifierKeys.Control;
+                    if ((act.Shortcut & Keys.Alt) != 0)
+                        modif |= ModifierKeys.Alt;
+                    Keys key = act.Shortcut & Keys.KeyCode;
+
+                    if (!RegisterHotKey(modif, key, act))
                         Console.WriteLine("Could not register hotkey: " + act.Shortcut);
                 }
             }
@@ -153,6 +161,7 @@ namespace TimeTracker
     [Flags]
     public enum ModifierKeys : uint
     {
+        None = 0,
         Alt = 1,
         Control = 2,
         Shift = 4,

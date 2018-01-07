@@ -21,7 +21,7 @@ CREATE TABLE ActionTypes
 	actionTypeID varchar (20) NOT NULL,
 	fk_project varchar (20) NOT NULL,
 	name varchar (20) NOT NULL,
-	shortcut varchar (20),
+	shortcut integer NOT NULL DEFAULT 0,
 	PRIMARY KEY(actionTypeID),
 	CONSTRAINT fkc_project FOREIGN KEY(fk_project) REFERENCES UserProjects (projectID)
 );
@@ -42,7 +42,7 @@ CREATE TABLE Shortcuts
 (
 	shortcutID varchar (20) NOT NULL,
 	fk_actionType varchar (20) NOT NULL,
-	keys varchar (20),
+	keys integer NOT NULL DEFAULT 0,
 	modified boolean NOT NULL,
 	PRIMARY KEY(shortcutID),
 	CONSTRAINT fkc_shortcut_actionType FOREIGN KEY(fk_actionType) REFERENCES ActionTypes (actionTypeID)

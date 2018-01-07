@@ -160,7 +160,7 @@ namespace TimeTracker
             }
         }
 
-        public void SetActionShortcut(ProjectActionType action, string newShortcut)
+        public void SetActionShortcut(ProjectActionType action, Keys newShortcut)
         {
             service.SetActionShortcut(action, newShortcut);
             service.UpdateActionTypes(activeProject); // Assume action is for active project
@@ -180,6 +180,7 @@ namespace TimeTracker
         public void HandleActionEvent(ProjectActionType action)
         {
             Console.WriteLine("Ation event: " + action.Id);
+            notifyIcon.ShowBalloonTip(1000, "Naujas veiksmas:", action.Name, ToolTipIcon.Info);
         }
 
         private void ShowLoginForm()

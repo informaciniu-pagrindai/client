@@ -1,4 +1,4 @@
-﻿namespace TimeTracker
+namespace TimeTracker
 {
     partial class ShortcutEditFrom
     {
@@ -68,12 +68,18 @@
             // 
             // shortcutBox
             // 
+            this.shortcutBox.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.shortcutBox.Location = new System.Drawing.Point(35, 75);
             this.shortcutBox.MaxLength = 20;
             this.shortcutBox.Name = "shortcutBox";
+            this.shortcutBox.ShortcutsEnabled = false;
             this.shortcutBox.Size = new System.Drawing.Size(310, 26);
             this.shortcutBox.TabIndex = 3;
             this.shortcutBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.shortcutBox.Enter += new System.EventHandler(this.shortcutBox_Enter);
+            this.shortcutBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.shortcutBox_KeyDown);
+            this.shortcutBox.Leave += new System.EventHandler(this.shortcutBox_Leave);
+            this.shortcutBox.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.shortcutBox_PreviewKeyDown);
             // 
             // ShortcutEditFrom
             // 

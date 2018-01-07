@@ -60,10 +60,10 @@ namespace TimeTracker
                 int rowid = actionDGrid.Rows.Add();
                 actionDGrid.Rows[rowid].Tag = act;
                 actionDGrid.Rows[rowid].Cells[0].Value = act.Name;
-                if (act.Shortcut == null)
-                    actionDGrid.Rows[rowid].Cells[1].Value = "-None-";
+                if (act.Shortcut == Keys.None)
+                    actionDGrid.Rows[rowid].Cells[1].Value = "Nėra";
                 else
-                    actionDGrid.Rows[rowid].Cells[1].Value = act.Shortcut;
+                    actionDGrid.Rows[rowid].Cells[1].Value = (act.Shortcut & Keys.Modifiers).ToString() + " + " + (act.Shortcut & Keys.KeyCode).ToString(); ;
             }
         }
 

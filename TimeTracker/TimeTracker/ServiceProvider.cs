@@ -4,6 +4,7 @@ using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace TimeTracker
 {
@@ -130,15 +131,15 @@ namespace TimeTracker
                 {
                     string id = dreader.GetString(dreader.GetOrdinal("actionTypeID"));
                     string name = dreader.GetString(dreader.GetOrdinal("name"));
-                    string shortcut = ReadNullableString(dreader, "shortcut");
+                    Keys shortcut = (Keys)dreader.GetInt32(dreader.GetOrdinal("shortcut"));
                     var act = new ProjectActionType(id, name, shortcut);
                     project.ActionTypes.Add(act);
                 }
             }
         }
-        public void SetActionShortcut(ProjectActionType action, string newShortcut)
+        public void SetActionShortcut(ProjectActionType action, Keys newShortcut)
         {
-            string sql = "UPDATE ActionTypes SET shortcut='" + newShortcut
+            string sql = "UPDATE ActionTypes SET shortcut='" + (int)newShortcut
                 + "' WHERE actionTypeID='" + action.Id + "';";
             using (SQLiteCommand command = new SQLiteCommand(sql, dbConn))
             {
