@@ -26,6 +26,7 @@ namespace TimeTracker
         // User state vars
         private bool loginResult = false;
         private Project activeProject = null;
+        private ProjectAction currentAction = null;
 
         public TimeTracker(string dataPath)
         {
@@ -177,10 +178,29 @@ namespace TimeTracker
             return service.GetActionHistory(activeProject);
         }
 
-        public void HandleActionEvent(ProjectActionType action)
+        public void HandleActionEvent(ProjectActionType actionType)
         {
-            Console.WriteLine("Ation event: " + action.Id);
-            notifyIcon.ShowBalloonTip(1000, "Naujas veiksmas:", action.Name, ToolTipIcon.Info);
+            if (currentAction == null)
+            {
+                currentAction = service.CreateLocalAction(actionType, DateTime.Now);
+            }
+            else
+            {
+                currentAction.EndTime = DateTime.Now;
+                service.UpdateAction(currentAction);
+                if (currentAction.Type.Id == actionType.Id)
+                {
+                    currentAction = null;
+                    notifyIcon.ShowBalloonTip(1000, "Baigtas veiksmas:", actionType.Name, ToolTipIcon.Info);
+                }
+                else
+                {
+                    currentAction = service.CreateLocalAction(actionType, DateTime.Now);
+                }
+            }
+            if (currentAction != null)
+                notifyIcon.ShowBalloonTip(1000, "Naujas veiksmas:", actionType.Name, ToolTipIcon.Info);
+            mainForm.updateCurrentAction(currentAction);
         }
 
         private void ShowLoginForm()

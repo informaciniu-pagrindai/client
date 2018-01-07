@@ -39,10 +39,6 @@ namespace TimeTracker
             //projectMembers = ProjectMemberRepository.GetAll();
 
             //currentUser = LoginForm.GetUser();
-
-            // TEMP HACK
-            stateGBox.Enabled = true;
-            shortcutGBox.Enabled = true;
         }
 
         public void ActivateProject(Project project)
@@ -50,6 +46,8 @@ namespace TimeTracker
             activeProject = project;
             curProjNameLabel.Text = project.Title;
             UpdateProjectShortcuts();
+            stateGBox.Enabled = true;
+            shortcutGBox.Enabled = true;
         }
         public void UpdateProjectShortcuts()
         {
@@ -64,6 +62,20 @@ namespace TimeTracker
                     actionDGrid.Rows[rowid].Cells[1].Value = "Nėra";
                 else
                     actionDGrid.Rows[rowid].Cells[1].Value = (act.Shortcut & Keys.Modifiers).ToString() + " + " + (act.Shortcut & Keys.KeyCode).ToString(); ;
+            }
+        }
+        public void updateCurrentAction(ProjectAction action)
+        {
+            dataGridView1.Rows.Clear();
+            dataGridView1.Rows.Add();
+            if (action == null)
+            {
+                dataGridView1.Rows[0].Cells[0].Value = "Nėra";
+            }
+            else
+            {
+                dataGridView1.Rows[0].Cells[0].Value = action.Type.Name;
+                dataGridView1.Rows[0].Cells[1].Value = action.StartTime;
             }
         }
 

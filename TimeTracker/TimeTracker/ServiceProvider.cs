@@ -25,13 +25,30 @@ namespace TimeTracker
         private Action<string> loginFailCallback;
 
         // For local action indexing
-        private int localActIndex = 0;
+        private int localActIndex;
 
         public ServiceProvider(TimeTracker parent, SQLiteConnection dbConnection)
         {
             timeTracker = parent;
             dbConn = dbConnection;
+
+            // Find last local entry index
+            using (SQLiteCommand command = new SQLiteCommand("SELECT actionID FROM Actions WHERE actionID LIKE '\\_%' ESCAPE '\\'", dbConn))
+            using (SQLiteDataReader dreader = command.ExecuteReader())
+            {
+                if (dreader.HasRows)
+                {
+                    dreader.Read();
+                    string idstr = ReadNullableString(dreader, "actionID");
+                    localActIndex = 1; // TODO parse index from ID string
+                }
+                else
+                {
+                    localActIndex = 0;
+                }
+            }
         }
+
         public void ReadLoginDataFromDB()
         {
             // Retrieve last login data
@@ -176,19 +193,33 @@ namespace TimeTracker
             }
             return acts;
         }
-        public ProjectAction AddAction(ProjectActionType type, DateTime startTime)
+
+        public ProjectAction CreateLocalAction(ProjectActionType type, DateTime startTime)
         {
-            string actid = "_act" + localActIndex;
+            string actid = "_act" + localActIndex++;
             var act = new ProjectAction(actid, type, startTime, DateTime.MinValue);
-            int starttime = 0; // TODO convert start time to target format
+            int starttime = ToUnixTimestamp(startTime);
 
             string sql = "INSERT INTO Actions ('actionID','fk_actionType','isLocal','startTime','endTime','modified') VALUES ('"
-                + actid + "','" + type.Id + "','true','" + starttime + "',NULL,'true');";
+                + actid + "','" + type.Id + "',1 ,'" + starttime + "',0 ,1);";
             using (SQLiteCommand command = new SQLiteCommand(sql, dbConn))
             {
                 command.ExecuteNonQuery();
             }
             return act;
+        }
+
+        public void UpdateAction(ProjectAction action)
+        {
+            int starttime = ToUnixTimestamp(action.StartTime);
+            int endtime = ToUnixTimestamp(action.EndTime);
+
+            string sql = "UPDATE Actions SET 'startTime'=" + starttime +
+                ",'endTime'=" + endtime + ",'modified'=1 WHERE actionID='"+action.Id+"';";
+            using (SQLiteCommand command = new SQLiteCommand(sql, dbConn))
+            {
+                command.ExecuteNonQuery();
+            }
         }
 
         private string ReadNullableString(SQLiteDataReader reader, string columnName)
@@ -207,7 +238,7 @@ namespace TimeTracker
         /// <returns>The given DateTime in Unix timestamp format</returns>
         public static int ToUnixTimestamp(DateTime dtime)
         {
-            return (int)Math.Truncate((dtime.ToUniversalTime().Subtract(new DateTime(1970, 1, 1))).TotalSeconds);
+            return (int)Math.Truncate((dtime.Subtract(new DateTime(1970, 1, 1))).TotalSeconds);
         }
 
         /// <summary>

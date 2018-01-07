@@ -56,9 +56,12 @@ namespace TimeTracker
 
         private void projectsGrid_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            Project selectedProject = (Project)projectsGrid.Rows[e.RowIndex].Tag;
-            timeTracker.ActivateProject(selectedProject);
-            Close();
+            if (e.RowIndex >= 0)
+            {
+                Project selectedProject = (Project)projectsGrid.Rows[e.RowIndex].Tag;
+                timeTracker.ActivateProject(selectedProject);
+                Close();
+            }
         }
     }
 }
