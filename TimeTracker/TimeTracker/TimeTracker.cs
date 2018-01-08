@@ -10,7 +10,8 @@ namespace TimeTracker
 {
     public class TimeTracker : ApplicationContext
     {
-        SQLiteConnection dbConn;
+        private SQLiteConnection dbConn;
+        private ApplicationDbContext remotedb;
         private ServiceProvider service;
         private TimeController timctrl;
         private ShortcutHandler schandl;
@@ -38,7 +39,7 @@ namespace TimeTracker
                 Directory.CreateDirectory(dataPath);
             string dbpath = Path.Combine(dataPath, "userdata.sqlite");
 
-            // Connect to database
+            // Connect to local database
             try
             {
                 dbConn = ConnectToDatabase(dbpath);
@@ -49,10 +50,12 @@ namespace TimeTracker
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();
             }
+            // Connect to remote database
+            remotedb = new ApplicationDbContext();
 
             InitializeContext();
 
-            service = new ServiceProvider(this, dbConn);
+            service = new ServiceProvider(this, dbConn, remotedb);
             timctrl = new TimeController(this);
             schandl = new ShortcutHandler(this); // TODO dispose propoerly
 
@@ -114,10 +117,6 @@ namespace TimeTracker
             service.userlogin = email;
             service.userpass = password;
             service.TryLogin(loginSuccessCallback, loginFailCallback);
-
-            // TODO Fetch user project list
-            
-            ShowMainForm();
         }
         public void LogOut()
         {
@@ -135,8 +134,8 @@ namespace TimeTracker
             loginResult = true;
             loginForm.Close();
 
-            ShowMainForm();
             service.UpdateUserProjects(); // send request
+            ShowMainForm();
         }
         public void loginFailCallback(string reason)
         {
@@ -271,6 +270,8 @@ namespace TimeTracker
         {
             if (mainForm != null) { mainForm.Close(); }
             dbConn.Close();
+            remotedb.Dispose();
+
             notifyIcon.Visible = false; // should remove lingering tray icon!
             base.ExitThreadCore();
         }
