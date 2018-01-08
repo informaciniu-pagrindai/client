@@ -24,12 +24,12 @@ namespace TimeTracker
                 }
                 else
                 {
-                    MessageBox.Show("Password cannot be empty!");
+                    MessageBox.Show("Neįvestas slaptažodis!");
                 }
             }
             else
             {
-                MessageBox.Show("Invalid e-mail!");
+                MessageBox.Show("Neteisingas e-paštas!");
             }
         }
 
@@ -37,14 +37,14 @@ namespace TimeTracker
         {
             if (logging)
             {
-                logInButton.Text = "Logging in..";
+                logInButton.Text = "Jungiamasi..";
                 logInButton.Enabled = false;
                 emailTextbox.Enabled = false;
                 pwdTextbox.Enabled = false;
             }
             else
             {
-                logInButton.Text = "Log in";
+                logInButton.Text = "Prisijungti";
                 logInButton.Enabled = true;
                 emailTextbox.Enabled = true;
                 pwdTextbox.Enabled = true;

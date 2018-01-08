@@ -140,6 +140,7 @@ namespace TimeTracker
         public void loginFailCallback(string reason)
         {
             loginForm.showLoggingstate(false);
+            loginForm.LoginFailCallback(reason);
         }
 
         public void ActivateProject(Project project)
@@ -154,9 +155,10 @@ namespace TimeTracker
                 schandl.RegisterShortcuts(project);
             }
             activeProject = project;
+            service.SetActiveProject(activeProject);
             if (mainForm != null)
             {
-                mainForm.ActivateProject(project);
+                mainForm.SetActiveProject(project);
             }
         }
 

@@ -155,12 +155,12 @@ namespace TimeTracker
                     {
                         command.ExecuteNonQuery();
                     }
-                    loginFailCallback("Invalid e-mail or password");
+                    loginFailCallback("Neteisingas e-paštas ar slaptažodis");
                 }
                 else
                 {
                     sessionToken = "..."; // HACK
-                    userProjects = GetUserProjectsFromRemoteDB();
+
                     // Update db record, TODO: if "remember" is checked
                     string sql = "UPDATE UserData SET login = '" + userlogin +
                         "', pass = '" + userpass + "' WHERE UserDataID = 'default';";
@@ -180,29 +180,18 @@ namespace TimeTracker
 
         public void UpdateUserProjects()
         {
-            
-            // TODO Request and update local db
-        }
-
-        public List<Project> GetUserProjectsFromRemoteDB()
-        {
             ProjectMembersRepository ProjectMembersRepo = new ProjectMembersRepository(remotedb);
             ProjectsRepository ProjectsRepo = new ProjectsRepository(remotedb);
 
+            List<Project> allProjects = ProjectsRepo.GetAll();
+            List<ProjectMembers> allProjectsMembers = ProjectMembersRepo.GetAll();
+            List<ProjectMembers> projectsIds = allProjectsMembers.FindAll(x => connectedUser.Id.Equals(x.UserId));
             List<Project> userProjects = new List<Project>();
-            List<ProjectMembers> allProjectsMembers = new List<ProjectMembers>();
-            List<Project> allProjects = new List<Project>();
-            allProjects = ProjectsRepo.GetAll();
-            allProjectsMembers = ProjectMembersRepo.GetAll();
-            List<ProjectMembers> projectsIds = new List<ProjectMembers>();
-            projectsIds = allProjectsMembers.FindAll(x => connectedUser.Id.Equals(x.UserId));
 
             foreach (Project proj in allProjects)
                 foreach (ProjectMembers projMemb in projectsIds)
                     if (proj.Id.Equals(projMemb.ProjectId))
                         userProjects.Add(proj);
-
-            return userProjects;
         }
 
         public List<Project> GetUserProjects()
@@ -222,6 +211,15 @@ namespace TimeTracker
                 }
             }
             return projs;
+        }
+
+        public void SetActiveProject(Project project)
+        {
+            string sql = "UPDATE UserData SET fk_activeProject = '" + project.Id + "' WHERE UserDataID = 'default';";
+            using (SQLiteCommand command = new SQLiteCommand(sql, dbConn))
+            {
+                command.ExecuteNonQuery();
+            }
         }
 
         public void UpdateActionTypes(Project project)

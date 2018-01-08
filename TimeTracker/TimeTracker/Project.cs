@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TimeTracker
 {
@@ -6,6 +7,7 @@ namespace TimeTracker
     {
         public string Id { get; set; }
         public string Title { get; set; }
+        [NotMapped]
         public string RoleName { get; set; }
         public List<ProjectActionType> ActionTypes { get; set; }
 
@@ -15,6 +17,9 @@ namespace TimeTracker
             Title = title;
             RoleName = roleName;
             ActionTypes = new List<ProjectActionType>();
+        }
+        public Project()
+        {
         }
     }
 }

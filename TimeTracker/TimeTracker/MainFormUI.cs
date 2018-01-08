@@ -41,7 +41,7 @@ namespace TimeTracker
             //currentUser = LoginForm.GetUser();
         }
 
-        public void ActivateProject(Project project)
+        public void SetActiveProject(Project project)
         {
             activeProject = project;
             curProjNameLabel.Text = project.Title;
