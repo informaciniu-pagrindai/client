@@ -147,13 +147,19 @@ namespace TimeTracker
                 if (!VerifyUser()) // TODO move to web response callback
                 {
                     // Failure
+                    string sql = "UPDATE UserData SET login = '" + userlogin +
+                        "', pass = NULL WHERE UserDataID = 'default';";
+                    using (SQLiteCommand command = new SQLiteCommand(sql, dbConn))
+                    {
+                        command.ExecuteNonQuery();
+                    }
                     loginFailCallback("Invalid e-mail or password");
                 }
                 else
                 {
                     sessionToken = "..."; // HACK
 
-                    // Update db record
+                    // Update db record, TODO: if "remember" is checked
                     string sql = "UPDATE UserData SET login = '" + userlogin +
                         "', pass = '" + userpass + "' WHERE UserDataID = 'default';";
                     using (SQLiteCommand command = new SQLiteCommand(sql, dbConn))
