@@ -17,6 +17,7 @@ namespace TimeTracker
         public string userlogin = null;
         public string userpass = null;
         public string activeproject = null;
+        public AspNetUsers connectedUser = null;
 
         private TimeTracker timeTracker;
         private SQLiteConnection dbConn;
@@ -27,7 +28,7 @@ namespace TimeTracker
         private Action<string> loginFailCallback;
 
         List<AspNetUsers> users = new List<AspNetUsers>();
-
+        List<Project> userProjects = new List<Project>();
         // For local action indexing
         private int localActIndex;
 
@@ -130,6 +131,7 @@ namespace TimeTracker
             users = UserRepository.GetAll();
 
             var user = users.Find(x => userlogin.Equals(x.Email));
+            connectedUser = user;
             //PasswordHash.ValidatePassword(userpass, user.PasswordHash);
             //PasswordVerificationResult passwordVerRes = new PasswordHasher().VerifyHashedPassword(user.PasswordHash, pwdTextbox.Text);
             //VerifyHashedPassword(user.PasswordHash, userpass);
@@ -158,7 +160,7 @@ namespace TimeTracker
                 else
                 {
                     sessionToken = "..."; // HACK
-
+                    userProjects = GetUserProjectsFromRemoteDB();
                     // Update db record, TODO: if "remember" is checked
                     string sql = "UPDATE UserData SET login = '" + userlogin +
                         "', pass = '" + userpass + "' WHERE UserDataID = 'default';";
@@ -178,8 +180,31 @@ namespace TimeTracker
 
         public void UpdateUserProjects()
         {
+            
             // TODO Request and update local db
         }
+
+        public List<Project> GetUserProjectsFromRemoteDB()
+        {
+            ProjectMembersRepository ProjectMembersRepo = new ProjectMembersRepository(remotedb);
+            ProjectsRepository ProjectsRepo = new ProjectsRepository(remotedb);
+
+            List<Project> userProjects = new List<Project>();
+            List<ProjectMembers> allProjectsMembers = new List<ProjectMembers>();
+            List<Project> allProjects = new List<Project>();
+            allProjects = ProjectsRepo.GetAll();
+            allProjectsMembers = ProjectMembersRepo.GetAll();
+            List<ProjectMembers> projectsIds = new List<ProjectMembers>();
+            projectsIds = allProjectsMembers.FindAll(x => connectedUser.Id.Equals(x.UserId));
+
+            foreach (Project proj in allProjects)
+                foreach (ProjectMembers projMemb in projectsIds)
+                    if (proj.Id.Equals(projMemb.ProjectId))
+                        userProjects.Add(proj);
+
+            return userProjects;
+        }
+
         public List<Project> GetUserProjects()
         {
             List<Project> projs = new List<Project>();
