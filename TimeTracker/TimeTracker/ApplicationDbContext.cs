@@ -12,5 +12,7 @@ namespace TimeTracker
         public DbSet<Project> Projects { get; set; }
         public DbSet<AspNetUsers> Users { get; set; }
         public DbSet<ProjectMembers> ProjectMembers { get; set; }
+        public DbSet<ProjectActions> ProjectActions { get; set; }
+        public DbSet<RegisteredActions> RegisteredActions { get; set; }
     }
 }

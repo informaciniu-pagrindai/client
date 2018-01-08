@@ -183,19 +183,30 @@ namespace TimeTracker
             ProjectMembersRepository ProjectMembersRepo = new ProjectMembersRepository(remotedb);
             ProjectsRepository ProjectsRepo = new ProjectsRepository(remotedb);
 
+            ProjectActionsRepository ProjectsActionsRepo = new ProjectActionsRepository(remotedb);
+            RegisteredActionsRepository RegisteredActionsRepo = new RegisteredActionsRepository(remotedb);
+
+            List<ProjectActions> allProjectActions = ProjectsActionsRepo.GetAll();
+            List<RegisteredActions> allRegisteredActions = RegisteredActionsRepo.GetAll();
+
             List<Project> allProjects = ProjectsRepo.GetAll();
             List<ProjectMembers> allProjectsMembers = ProjectMembersRepo.GetAll();
+
             List<ProjectMembers> projectsIds = allProjectsMembers.FindAll(x => connectedUser.Id.Equals(x.UserId));
 
+            List<ProjectActions> availableProjectsActions = new List<ProjectActions>();
             foreach (Project proj in allProjects)
             {
                 foreach (ProjectMembers projMemb in projectsIds)
                 {
                     if (proj.Id.Equals(projMemb.ProjectId))
                     {
+                        List<ProjectActions> templist = allProjectActions.FindAll(x => proj.Id.Equals(x.ProjectId));
+                        availableProjectsActions.AddRange(templist);
+
                         string rolename = "FIXME";
-                        string sql = "INSERT INTO UserProjects (projectID, title, rolename) VALUES('" + proj.Id + "', '" + proj.Title + "', '" + rolename +
-                            "') ON DUPLICATE KEY UPDATE 'title' = '" + proj.Title + "', rolename = '" + rolename + "';";
+                        string sql = "UPDATE UserProjects SET 'title'='" + proj.Title + "', 'roleName'='" + rolename + "' WHERE 'projectID'='" + proj.Id + "';" +
+                          "INSERT OR IGNORE INTO UserProjects (projectID, title, roleName) VALUES('" + proj.Id + "', '" + proj.Title + "', '" + rolename + "');";
                         using (SQLiteCommand command = new SQLiteCommand(sql, dbConn))
                         {
                             command.ExecuteNonQuery();
@@ -204,6 +215,19 @@ namespace TimeTracker
                     }
                 }
             }
+
+            foreach (ProjectActions pa in availableProjectsActions)
+            {
+                string sql = "INSERT INTO ActionTypes (actionTypeID, fk_project, name) VALUES('" + pa.Id + "', '" + pa.ProjectId + "', '" + pa.Description + "');";
+                using (SQLiteCommand command = new SQLiteCommand(sql, dbConn))
+                {
+                    command.ExecuteNonQuery();
+                }
+            }
+
+         //   List<ProjectActions> test = availableProjectsActions;
+         //   List<Project> userProjects = allProjects.FindAll(x => connectedUser.Id.Equals(x.))
+
         }
 
         public List<Project> GetUserProjects()

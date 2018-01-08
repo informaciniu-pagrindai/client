@@ -110,10 +110,14 @@
     <Compile Include="PasswordHash.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Project.cs" />
+    <Compile Include="RegisteredActions.cs" />
+    <Compile Include="RegisteredActionsRepository.cs" />
     <Compile Include="ProjectActionType.cs" />
     <Compile Include="ProjectAction.cs" />
     <Compile Include="ProjectController.cs" />
+    <Compile Include="ProjectActions.cs" />
     <Compile Include="ProjectMembers.cs" />
+    <Compile Include="ProjectActionsRepository.cs" />
     <Compile Include="ProjectMembersRepository.cs" />
     <Compile Include="ProjectsForm.cs">
       <SubType>Form</SubType>
