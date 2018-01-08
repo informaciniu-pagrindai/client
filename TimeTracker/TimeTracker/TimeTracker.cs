@@ -203,7 +203,7 @@ namespace TimeTracker
             }
             if (currentAction != null)
                 notifyIcon.ShowBalloonTip(1000, "Naujas veiksmas:", actionType.Name, ToolTipIcon.Info);
-            mainForm.updateCurrentAction(currentAction);
+            mainForm?.updateCurrentAction(currentAction);
         }
 
         private void ShowLoginForm()

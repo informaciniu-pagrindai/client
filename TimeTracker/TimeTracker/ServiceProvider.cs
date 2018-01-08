@@ -48,7 +48,7 @@ namespace TimeTracker
                 {
                     dreader.Read();
                     string idstr = ReadNullableString(dreader, "actionID");
-                    localActIndex = Convert.ToInt32(idstr.Substring(1, idstr.Length-1)) + 1;
+                    localActIndex = Convert.ToInt32(idstr.Substring(1, idstr.Length - 1)) + 1;
                 }
                 else
                 {
@@ -197,14 +197,16 @@ namespace TimeTracker
             List<ProjectMembers> projectsIds = allProjectsMembers.FindAll(x => connectedUser.Id.Equals(x.UserId));
 
             List<ProjectActions> availableProjectsActions = new List<ProjectActions>();
+            List<RegisteredActions> availableRegisteredActions = new List<RegisteredActions>();
+
             foreach (Project proj in allProjects)
             {
                 foreach (ProjectMembers projMemb in projectsIds)
                 {
                     if (proj.Id.Equals(projMemb.ProjectId))
                     {
-                        List<ProjectActions> templist = allProjectActions.FindAll(x => proj.Id.Equals(x.ProjectId));
-                        availableProjectsActions.AddRange(templist);
+                        List<ProjectActions> templistPA = allProjectActions.FindAll(x => proj.Id.Equals(x.ProjectId));
+                        availableProjectsActions.AddRange(templistPA);
 
                         string rolename = "FIXME";
                         string sql = "UPDATE UserProjects SET 'title'='" + proj.Title + "', 'roleName'='" + rolename + "' WHERE 'projectID'='" + proj.Id + "';" +
@@ -220,7 +222,7 @@ namespace TimeTracker
 
             foreach (ProjectActions pa in availableProjectsActions)
             {
-                string sql = "UPDATE ActionTypes SET 'name'='" + pa.Description + "', 'actionTypeID'='" + pa.Id + "' WHERE 'fk_project'='" + pa.ProjectId + "';" + 
+                string sql = "UPDATE ActionTypes SET 'name'='" + pa.Description + "', 'actionTypeID'='" + pa.Id + "' WHERE 'fk_project'='" + pa.ProjectId + "';" +
                     "INSERT OR IGNORE INTO ActionTypes (actionTypeID, fk_project, name) VALUES('" + pa.Id + "', '" + pa.ProjectId + "', '" + pa.Description + "');";
                 using (SQLiteCommand command = new SQLiteCommand(sql, dbConn))
                 {
@@ -228,8 +230,32 @@ namespace TimeTracker
                 }
             }
 
-         //   List<ProjectActions> test = availableProjectsActions;
-         //   List<Project> userProjects = allProjects.FindAll(x => connectedUser.Id.Equals(x.))
+            foreach (ProjectMembers projMemb in projectsIds)
+            {
+                foreach (ProjectActions pa in availableProjectsActions)
+                {
+                    if (projMemb.ProjectId.Equals(pa.ProjectId))
+                    {
+                        List<RegisteredActions> templistRA = allRegisteredActions.FindAll(x => pa.Id.Equals(x.ProjectActionId));
+                        availableRegisteredActions.AddRange(templistRA);
+                    }
+                }
+            }
+
+            foreach (RegisteredActions ra in availableRegisteredActions)
+            {
+                int startTime = ToUnixTimestamp(ra.StartTime);
+                int endTime = ToUnixTimestamp(ra.StartTime.AddSeconds(ra.Duration));
+
+                string sql = "UPDATE Actions SET 'fk_actionType'='" + ra.ProjectActionId + "', 'actionID'='" + ra.Id
+                    + "', 'startTime'='" + startTime + "', 'endTime'='" + endTime
+                    + "', 'modified'='" + 0 + "', 'isLocal'='" + 0 + "' WHERE 'actionID'='" + ra.Id + "';" +
+                    "INSERT OR IGNORE INTO Actions (actionID, fk_actionType, isLocal, startTime, endTime, modified) VALUES('" + ra.Id + "', '" + ra.ProjectActionId + "', 0, '" + startTime + "', '" + endTime + "', 0); ";
+                using (SQLiteCommand command = new SQLiteCommand(sql, dbConn))
+                {
+                    command.ExecuteNonQuery();
+                }
+            }
 
         }
 
@@ -339,7 +365,7 @@ namespace TimeTracker
             int endtime = ToUnixTimestamp(action.EndTime);
 
             string sql = "UPDATE Actions SET 'startTime'=" + starttime +
-                ",'endTime'=" + endtime + ",'modified'=1 WHERE actionID='"+action.Id+"';";
+                ",'endTime'=" + endtime + ",'modified'=1 WHERE actionID='" + action.Id + "';";
             using (SQLiteCommand command = new SQLiteCommand(sql, dbConn))
             {
                 command.ExecuteNonQuery();
