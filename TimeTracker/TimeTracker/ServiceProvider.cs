@@ -218,7 +218,8 @@ namespace TimeTracker
 
             foreach (ProjectActions pa in availableProjectsActions)
             {
-                string sql = "INSERT INTO ActionTypes (actionTypeID, fk_project, name) VALUES('" + pa.Id + "', '" + pa.ProjectId + "', '" + pa.Description + "');";
+                string sql = "UPDATE ActionTypes SET 'name'='" + pa.Description + "', 'actionTypeID'='" + pa.Id + "' WHERE 'fk_project'='" + pa.ProjectId + "';" + 
+                    "INSERT OR IGNORE INTO ActionTypes (actionTypeID, fk_project, name) VALUES('" + pa.Id + "', '" + pa.ProjectId + "', '" + pa.Description + "');";
                 using (SQLiteCommand command = new SQLiteCommand(sql, dbConn))
                 {
                     command.ExecuteNonQuery();
