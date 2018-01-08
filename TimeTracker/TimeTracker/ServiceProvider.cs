@@ -24,6 +24,9 @@ namespace TimeTracker
         private Action loginSuccessCallback;
         private Action<string> loginFailCallback;
 
+        ApplicationDbContext context = new ApplicationDbContext();
+        List<AspNetUsers> users = new List<AspNetUsers>();
+
         // For local action indexing
         private int localActIndex;
 
@@ -80,6 +83,16 @@ namespace TimeTracker
             return false;
         }
 
+        public bool VerifyUser()
+        {
+            AspNetUsersRepository UserRepository = new AspNetUsersRepository(context);
+            users = UserRepository.GetAll();
+
+            var user = users.Find(x => userlogin.Equals(x.Email));
+
+            return user != null;
+        }
+
         public void TryLogin(Action successCallback, Action<string> failCallback)
         {
             if (LoginDataValid())
@@ -88,7 +101,7 @@ namespace TimeTracker
                 loginFailCallback = failCallback;
                 // TODO connect to server..
 
-                if (false) // TODO move to web response callback
+                if (!VerifyUser()) // TODO move to web response callback
                 {
                     // Failure
                     loginFailCallback("Invalid e-mail or password");
