@@ -155,7 +155,7 @@ namespace TimeTracker
                     {
                         command.ExecuteNonQuery();
                     }
-                    loginFailCallback("Neteisingas e-paötas ar slaptaûodis");
+                    loginFailCallback("Neteisingas e-pa≈°tas ar slapta≈æodis");
                 }
                 else
                 {
@@ -186,12 +186,24 @@ namespace TimeTracker
             List<Project> allProjects = ProjectsRepo.GetAll();
             List<ProjectMembers> allProjectsMembers = ProjectMembersRepo.GetAll();
             List<ProjectMembers> projectsIds = allProjectsMembers.FindAll(x => connectedUser.Id.Equals(x.UserId));
-            List<Project> userProjects = new List<Project>();
 
             foreach (Project proj in allProjects)
+            {
                 foreach (ProjectMembers projMemb in projectsIds)
+                {
                     if (proj.Id.Equals(projMemb.ProjectId))
-                        userProjects.Add(proj);
+                    {
+                        string rolename = "FIXME";
+                        string sql = "INSERT INTO UserProjects (projectID, title, rolename) VALUES('" + proj.Id + "', '" + proj.Title + "', '" + rolename +
+                            "') ON DUPLICATE KEY UPDATE 'title' = '" + proj.Title + "', rolename = '" + rolename + "';";
+                        using (SQLiteCommand command = new SQLiteCommand(sql, dbConn))
+                        {
+                            command.ExecuteNonQuery();
+                        }
+                        // TODO remove untouched projects (and thus child entries)
+                    }
+                }
+            }
         }
 
         public List<Project> GetUserProjects()
