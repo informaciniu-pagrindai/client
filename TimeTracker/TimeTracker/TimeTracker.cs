@@ -136,6 +136,8 @@ namespace TimeTracker
 
             service.UpdateUserProjects(); // send request
             ShowMainForm();
+            mainForm.SetActiveUser(service.connectedUser);
+            // TODO activate last project if auto-logged
         }
         public void loginFailCallback(string reason)
         {

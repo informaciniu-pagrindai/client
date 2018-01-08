@@ -15,15 +15,11 @@ namespace TimeTracker
         ApplicationDbContext context = new ApplicationDbContext();
         List<Project> projects = new List<Project>();
         private Project activeProject = null;
-        //  List<AspNetUsers> users = new List<AspNetUsers>();
-        List<ProjectMembers> projectMembers = new List<ProjectMembers>();
-        //LogInForm LoginForm = new LogInForm(false);
-        public AspNetUsers currentUser { get; set; }
+        private AspNetUsers activeUser = null;
 
         private TimeTracker timeTracker;
         private HistoryForm historyForm = null;
         private ProjectsForm projectsForm = null;
-        //private ShortcutsForm shortcutsForm = null;
 
         public MainFormUI(TimeTracker timetracker)
         {
@@ -41,6 +37,14 @@ namespace TimeTracker
             //currentUser = LoginForm.GetUser();
         }
 
+        public void SetActiveUser(AspNetUsers user)
+        {
+            activeUser = user;
+            if (activeUser == null)
+                curUserLabel.Text = "Neprisijungta";
+            else
+                curUserLabel.Text = activeUser.Email;
+        }
         public void SetActiveProject(Project project)
         {
             activeProject = project;

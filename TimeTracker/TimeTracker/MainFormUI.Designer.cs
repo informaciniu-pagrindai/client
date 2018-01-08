@@ -30,7 +30,7 @@ namespace TimeTracker
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFormUI));
             this.curProjLabel = new System.Windows.Forms.Label();
-            this.curStateLabel = new System.Windows.Forms.Label();
+            this.curUserLabel = new System.Windows.Forms.Label();
             this.curProjNameLabel = new System.Windows.Forms.LinkLabel();
             this.shortcutGBox = new System.Windows.Forms.GroupBox();
             this.shortcutsEditBtn = new System.Windows.Forms.Button();
@@ -59,15 +59,15 @@ namespace TimeTracker
             this.curProjLabel.TabIndex = 1;
             this.curProjLabel.Text = "Projektas:";
             // 
-            // curStateLabel
+            // curUserLabel
             // 
-            this.curStateLabel.AutoSize = true;
-            this.curStateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.curStateLabel.Location = new System.Drawing.Point(60, 60);
-            this.curStateLabel.Name = "curStateLabel";
-            this.curStateLabel.Size = new System.Drawing.Size(183, 32);
-            this.curStateLabel.TabIndex = 2;
-            this.curStateLabel.Text = "Neprisijungta";
+            this.curUserLabel.AutoSize = true;
+            this.curUserLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.curUserLabel.Location = new System.Drawing.Point(60, 60);
+            this.curUserLabel.Name = "curUserLabel";
+            this.curUserLabel.Size = new System.Drawing.Size(183, 32);
+            this.curUserLabel.TabIndex = 2;
+            this.curUserLabel.Text = "Neprisijungta";
             // 
             // curProjNameLabel
             // 
@@ -236,7 +236,7 @@ namespace TimeTracker
             this.Controls.Add(this.stateGBox);
             this.Controls.Add(this.shortcutGBox);
             this.Controls.Add(this.curProjNameLabel);
-            this.Controls.Add(this.curStateLabel);
+            this.Controls.Add(this.curUserLabel);
             this.Controls.Add(this.curProjLabel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -254,7 +254,7 @@ namespace TimeTracker
 
         #endregion
         private System.Windows.Forms.Label curProjLabel;
-        private System.Windows.Forms.Label curStateLabel;
+        private System.Windows.Forms.Label curUserLabel;
         private System.Windows.Forms.LinkLabel curProjNameLabel;
         private System.Windows.Forms.GroupBox shortcutGBox;
         private System.Windows.Forms.DataGridView dataGridView1;

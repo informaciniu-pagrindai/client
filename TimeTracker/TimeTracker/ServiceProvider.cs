@@ -29,6 +29,7 @@ namespace TimeTracker
 
         List<AspNetUsers> users = new List<AspNetUsers>();
         List<Project> userProjects = new List<Project>();
+
         // For local action indexing
         private int localActIndex;
 
@@ -39,14 +40,15 @@ namespace TimeTracker
             remotedb = remoteDB;
 
             // Find last local entry index
-            using (SQLiteCommand command = new SQLiteCommand("SELECT actionID FROM Actions WHERE actionID LIKE '\\_%' ESCAPE '\\'", dbConn))
+            using (SQLiteCommand command = new SQLiteCommand(
+                "SELECT actionID FROM Actions WHERE actionID LIKE '\\_%' ESCAPE '\\' ORDER BY actionID DESC LIMIT 1", dbConn))
             using (SQLiteDataReader dreader = command.ExecuteReader())
             {
                 if (dreader.HasRows)
                 {
                     dreader.Read();
                     string idstr = ReadNullableString(dreader, "actionID");
-                    localActIndex = 1; // TODO parse index from ID string
+                    localActIndex = Convert.ToInt32(idstr.Substring(1, idstr.Length-1)) + 1;
                 }
                 else
                 {
@@ -318,7 +320,7 @@ namespace TimeTracker
 
         public ProjectAction CreateLocalAction(ProjectActionType type, DateTime startTime)
         {
-            string actid = "_act" + localActIndex++;
+            string actid = "_" + localActIndex++;
             var act = new ProjectAction(actid, type, startTime, DateTime.MinValue);
             int starttime = ToUnixTimestamp(startTime);
 
